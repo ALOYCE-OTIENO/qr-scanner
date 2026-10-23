@@ -2,7 +2,7 @@ app = "qr-scanner"
 primary_region = "nrt"
 
 [build]
-  builder = "heroku/buildpacks:20"
+  builder = "paketobuildpacks/builder:base"
 
 [env]
   APP_ENV = "production"
