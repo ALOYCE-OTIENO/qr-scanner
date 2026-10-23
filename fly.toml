@@ -23,8 +23,8 @@ primary_region = "nrt"
   processes = ["app"]
 
 [[http_service.checks]]
-  interval = 15s
-  timeout = 10s
+  interval = "15s"
+  timeout = "10s"
   grace_period = "5s"
   method = "GET"
   path = "/"
