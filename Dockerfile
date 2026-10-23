@@ -3,6 +3,9 @@ FROM php:8.1-apache
 # Set working directory
 WORKDIR /var/www/html
 
+# Increase PHP memory limit
+RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory.ini
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -24,19 +27,22 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
+# Copy composer files first for better caching
+COPY composer.json composer.lock ./
+
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
 # Copy application files
 COPY . /var/www/html/
 
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Create .env file from .env.example
+RUN cp .env.example .env
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache
-
-# Generate application key
-RUN php artisan key:generate
 
 # Expose port 80
 EXPOSE 80
