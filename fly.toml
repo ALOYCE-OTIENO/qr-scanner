@@ -2,8 +2,7 @@ app = "qr-scanner"
 primary_region = "nrt"
 
 [build]
-  [build.args]
-    PHP_VERSION = "8.1"
+  builder = "heroku/buildpacks:20"
 
 [env]
   APP_ENV = "production"
