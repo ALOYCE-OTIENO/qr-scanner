@@ -2,7 +2,7 @@ app = "qr-scanner"
 primary_region = "nrt"
 
 [build]
-  builder = "paketobuildpacks/builder:base"
+  dockerfile = "Dockerfile"
 
 [env]
   APP_ENV = "production"
