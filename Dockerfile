@@ -31,8 +31,8 @@ RUN a2enmod rewrite
 # Copy composer files first for better caching
 COPY composer.json composer.lock ./
 
-# Install dependencies with verbose output
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --verbose
+# Install dependencies with verbose output and ignore platform requirements
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --verbose --ignore-platform-reqs
 
 # Copy application files
 COPY . /var/www/html/
