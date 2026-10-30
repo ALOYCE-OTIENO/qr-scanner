@@ -467,6 +467,31 @@
                             </a>
                         </li>
                         @endif
+                        
+                        <!-- WeCom Features -->
+                        <li class="nav-item mt-3">
+                            <small class="text-muted ms-3" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">WeCom</small>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('messages.*') ? 'active' : '' }}" href="{{ route('messages.index') }}">
+                                <i class="bi bi-chat-dots"></i> Messages
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('groups.*') ? 'active' : '' }}" href="{{ route('groups.index') }}">
+                                <i class="bi bi-people"></i> Work Groups
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('notifications.*') ? 'active' : '' }}" href="{{ route('notifications.index') }}">
+                                <i class="bi bi-bell"></i> Notifications
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('directory.index') ? 'active' : '' }}" href="{{ route('directory.index') }}">
+                                <i class="bi bi-person-badge"></i> Directory
+                            </a>
+                        </li>
                         <li class="nav-item mt-4">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf

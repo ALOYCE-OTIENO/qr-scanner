@@ -8,6 +8,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -77,4 +80,35 @@ Route::middleware(['auth'])->group(function () {
         // Employee Performance Report
         Route::get('/employee-performance', [ReportController::class, 'employeePerformance'])->name('reports.employee-performance');
     });
+
+    // WeCom Features - Messages
+    Route::prefix('messages')->group(function () {
+        Route::get('/', [MessageController::class, 'index'])->name('messages.index');
+        Route::get('/{userId}', [MessageController::class, 'show'])->name('messages.show');
+        Route::post('/', [MessageController::class, 'store'])->name('messages.store');
+    });
+
+    // WeCom Features - Groups
+    Route::prefix('groups')->group(function () {
+        Route::get('/', [GroupController::class, 'index'])->name('groups.index');
+        Route::get('/create', [GroupController::class, 'create'])->name('groups.create');
+        Route::post('/', [GroupController::class, 'store'])->name('groups.store');
+        Route::get('/{id}', [GroupController::class, 'show'])->name('groups.show');
+        Route::post('/{groupId}/add-member', [GroupController::class, 'addMember'])->name('groups.add-member');
+    });
+
+    // WeCom Features - Notifications
+    Route::prefix('notifications')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::post('/{id}/mark-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
+        Route::post('/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+        Route::get('/create', [NotificationController::class, 'create'])->name('notifications.create')->middleware('admin');
+        Route::post('/', [NotificationController::class, 'store'])->name('notifications.store')->middleware('admin');
+    });
+
+    // Employee Directory
+    Route::get('/directory', function () {
+        $users = \App\Models\User::all();
+        return view('directory.index', compact('users'));
+    })->name('directory.index');
 });
