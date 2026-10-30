@@ -14,25 +14,29 @@
 
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="stat-card purple">
+        <div class="stat-card">
+            <i class="bi bi-people"></i>
             <h3>{{ $totalEmployees }}</h3>
             <p>Total Employees</p>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card blue">
+        <div class="stat-card">
+            <i class="bi bi-calendar-check"></i>
             <h3>{{ $presentToday }}</h3>
             <p>Present Today</p>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card green">
+        <div class="stat-card">
+            <i class="bi bi-clipboard-data"></i>
             <h3>{{ $jobOutputsToday }}</h3>
             <p>Job Outputs Today</p>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card orange">
+        <div class="stat-card">
+            <i class="bi bi-clock-history"></i>
             <h3>{{ $lateToday }}</h3>
             <p>Late Arrivals</p>
         </div>
@@ -87,7 +91,7 @@
                                         <td>{{ $attendance->date->format('M d, Y') }}</td>
                                         <td>{{ $attendance->check_in_time }}</td>
                                         <td>
-                                            <span class="badge bg-{{ $attendance->status === 'present' ? 'success' : 'warning' }}">
+                                            <span class="badge {{ $attendance->status === 'present' ? 'badge-success' : 'badge-warning' }}">
                                                 {{ ucfirst($attendance->status) }}
                                             </span>
                                         </td>

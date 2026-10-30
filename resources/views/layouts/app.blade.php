@@ -6,7 +6,7 @@
     <title>@yield('title', 'YUSU POWER MOUNTAIN SOLUTION LIMITED')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -17,395 +17,396 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(0, 200, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 40% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(255, 170, 0, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 20%, #0d1b2a 40%, #1b263b 60%, #2d1b4e 80%, #0a0a0a 100%);
+            background: #f5f5f5;
             min-height: 100vh;
-            overflow-x: hidden;
-            color: white;
-            background-attachment: fixed;
+            color: #333;
         }
 
-        /* Animated Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            background: 
-                linear-gradient(45deg, rgba(0, 255, 136, 0.03) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(0, 200, 255, 0.03) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, rgba(255, 0, 128, 0.03) 75%),
-                linear-gradient(-45deg, transparent 75%, rgba(255, 170, 0, 0.03) 75%);
-            background-size: 60px 60px;
-            animation: pattern-move 20s linear infinite;
-        }
-
-        @keyframes pattern-move {
-            0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-            100% { background-position: 60px 60px, 60px 60px, 60px 60px, 60px 60px; }
-        }
-
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #00ff88;
-            border-radius: 50%;
-            animation: float 15s infinite;
-            opacity: 0.8;
-            box-shadow: 0 0 10px #00ff88;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Gradient Orbs */
-        .gradient-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            z-index: -1;
-            animation: orb-move 20s ease-in-out infinite;
-        }
-
-        .orb-1 {
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.4) 0%, rgba(0, 200, 255, 0.2) 50%, transparent 70%);
-            top: -250px;
-            right: -250px;
-        }
-
-        .orb-2 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 0, 128, 0.3) 0%, rgba(128, 0, 255, 0.2) 50%, transparent 70%);
-            bottom: -250px;
-            left: -250px;
-            animation-delay: -10s;
-        }
-
-        @keyframes orb-move {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -50px) scale(1.1); }
-            50% { transform: translate(-50px, 50px) scale(0.9); }
-            75% { transform: translate(-50px, -50px) scale(1.05); }
+        /* WeCom Green Color */
+        :root {
+            --wecom-green: #07C160;
+            --wecom-green-light: #07C1601a;
+            --wecom-green-hover: #06ad57;
+            --wecom-gray: #999999;
+            --wecom-gray-light: #f7f7f7;
+            --wecom-border: #e5e5e5;
         }
 
         /* Sidebar */
         .sidebar {
             min-height: 100vh;
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 10, 46, 0.95) 100%);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(0, 255, 136, 0.2);
+            background: #ffffff;
+            border-right: 1px solid var(--wecom-border);
         }
         
         .sidebar .nav-link {
-            color: rgba(255,255,255,0.7);
+            color: #333;
             padding: 12px 20px;
             margin: 5px 10px;
-            border-radius: 12px;
-            transition: all 0.3s;
+            border-radius: 6px;
+            transition: all 0.2s ease;
             font-weight: 500;
+            font-size: 0.95rem;
         }
         
-        .sidebar .nav-link:hover,
+        .sidebar .nav-link:hover {
+            background: var(--wecom-gray-light);
+            color: var(--wecom-green);
+        }
+        
         .sidebar .nav-link.active {
-            color: white;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 200, 255, 0.2) 100%);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            transform: translateX(5px);
+            color: var(--wecom-green);
+            background: var(--wecom-green-light);
+            font-weight: 600;
         }
         
         .sidebar .nav-link i {
             margin-right: 10px;
+            font-size: 1.1rem;
         }
 
         .sidebar .nav-link .dropdown-toggle {
-            color: rgba(255,255,255,0.7);
+            color: #333;
         }
 
         .sidebar .nav-link .dropdown-toggle:hover,
         .sidebar .nav-link .dropdown-toggle.active {
-            color: white;
+            color: var(--wecom-green);
         }
 
         .sidebar .collapse .nav-link {
             margin: 3px 0;
-            padding: 10px 15px 10px 30px;
+            padding: 10px 15px 10px 40px;
             font-size: 0.9rem;
         }
 
         .main-content {
-            padding: 30px;
+            padding: 2rem;
+            background: #f5f5f5;
         }
 
         /* Cards */
         .card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px rgba(0, 255, 136, 0.1);
-            margin-bottom: 20px;
+            background: #ffffff;
+            border: 1px solid var(--wecom-border);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            margin-bottom: 1.5rem;
         }
 
         .card-header {
-            background: transparent;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            font-weight: 700;
+            background: #ffffff;
+            border-bottom: 1px solid var(--wecom-border);
+            color: #333;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
         }
 
         .card-body {
-            color: #cbd5e1;
+            color: #333;
+            padding: 1.5rem;
         }
 
         /* Stat Cards */
         .stat-card {
-            border-radius: 24px;
-            padding: 2rem;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
+            border-radius: 8px;
+            padding: 1.5rem;
+            color: #333;
+            border: 1px solid var(--wecom-border);
+            background: #ffffff;
+            transition: all 0.2s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.3);
-        }
-
-        .stat-card.purple { 
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 200, 255, 0.2) 100%);
-            border-color: rgba(0, 255, 136, 0.3);
-        }
-        .stat-card.blue { 
-            background: linear-gradient(135deg, rgba(0, 200, 255, 0.2) 0%, rgba(255, 0, 128, 0.2) 100%);
-            border-color: rgba(0, 200, 255, 0.3);
-        }
-        .stat-card.green { 
-            background: linear-gradient(135deg, rgba(255, 0, 128, 0.2) 0%, rgba(255, 170, 0, 0.2) 100%);
-            border-color: rgba(255, 0, 128, 0.3);
-        }
-        .stat-card.orange { 
-            background: linear-gradient(135deg, rgba(255, 170, 0, 0.2) 0%, rgba(0, 255, 136, 0.2) 100%);
-            border-color: rgba(255, 170, 0, 0.3);
+            border-color: var(--wecom-green);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
         }
 
         .stat-card h3 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 5px;
-            background: linear-gradient(135deg, #00ff88 0%, #00c8ff 50%, #ff0080 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--wecom-green);
         }
 
         .stat-card p {
             margin: 0;
-            opacity: 0.9;
+            color: var(--wecom-gray);
             font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .stat-card i {
+            font-size: 1.5rem;
+            color: var(--wecom-green);
+            margin-bottom: 0.5rem;
         }
 
         /* Table */
         .table {
-            border-radius: 16px;
-            overflow: hidden;
-            color: #cbd5e1;
+            color: #333;
+            margin-bottom: 0;
         }
 
         .table thead {
-            background: rgba(15, 23, 42, 0.8);
+            background: var(--wecom-gray-light);
         }
 
         .table thead th {
-            color: #00ff88;
-            font-weight: 700;
-            border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+            color: #333;
+            font-weight: 600;
+            border-bottom: 2px solid var(--wecom-border);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .table tbody tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--wecom-border);
+            transition: all 0.2s ease;
         }
 
         .table tbody tr:hover {
-            background: rgba(0, 255, 136, 0.05);
+            background: var(--wecom-gray-light);
+        }
+
+        .table tbody td {
+            vertical-align: middle;
         }
 
         /* Buttons */
         .btn-primary {
-            background: linear-gradient(135deg, #00ff88 0%, #00c8ff 50%, #00ff88 100%);
+            background: var(--wecom-green);
             border: none;
-            color: #0a0a0a;
-            font-weight: 700;
-            border-radius: 50px;
-            padding: 0.75rem 2rem;
-            transition: all 0.4s ease;
-            box-shadow: 0 8px 30px rgba(0, 255, 136, 0.5);
+            color: white;
+            font-weight: 500;
+            border-radius: 4px;
+            padding: 0.6rem 1.5rem;
+            transition: all 0.2s ease;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.7);
+            background: var(--wecom-green-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
         }
 
         .btn-outline-primary {
-            border: 2px solid rgba(0, 200, 255, 0.8);
-            color: #00c8ff;
-            font-weight: 700;
-            border-radius: 50px;
-            transition: all 0.4s ease;
+            border: 1px solid var(--wecom-green);
+            color: var(--wecom-green);
+            font-weight: 500;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            background: transparent;
         }
 
         .btn-outline-primary:hover {
-            background: rgba(0, 200, 255, 0.1);
-            border-color: #00c8ff;
-            transform: translateY(-3px);
-            color: #00c8ff;
+            background: var(--wecom-green-light);
+            border-color: var(--wecom-green);
+            color: var(--wecom-green);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #00ff88 0%, #00c8ff 100%);
+            background: var(--wecom-green);
             border: none;
-            color: #0a0a0a;
-            font-weight: 700;
-            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+
+        .btn-success:hover {
+            background: var(--wecom-green-hover);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #ff0080 0%, #ffaa00 100%);
+            background: #ff4d4f;
             border: none;
             color: white;
-            font-weight: 700;
-            border-radius: 50px;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+
+        .btn-danger:hover {
+            background: #ff7875;
         }
 
         .btn-warning {
-            background: linear-gradient(135deg, #ffaa00 0%, #ff0080 100%);
+            background: #faad14;
             border: none;
             color: white;
-            font-weight: 700;
-            border-radius: 50px;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+
+        .btn-warning:hover {
+            background: #ffc53d;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
         }
 
         /* Alert */
         .alert {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            color: white;
+            background: #ffffff;
+            border: 1px solid var(--wecom-border);
+            border-radius: 8px;
+            color: #333;
+            padding: 1rem 1.5rem;
         }
 
         .alert-success {
-            border-color: rgba(0, 255, 136, 0.3);
-            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--wecom-green);
+            background: var(--wecom-green-light);
+            color: var(--wecom-green);
         }
 
         .alert-danger {
-            border-color: rgba(255, 0, 128, 0.3);
-            background: rgba(255, 0, 128, 0.1);
+            border-color: #ff4d4f;
+            background: #fff1f0;
+            color: #ff4d4f;
         }
 
         .alert-info {
-            border-color: rgba(0, 200, 255, 0.3);
-            background: rgba(0, 200, 255, 0.1);
+            border-color: #1890ff;
+            background: #e6f7ff;
+            color: #1890ff;
         }
 
         /* Form */
         .form-label {
-            color: #cbd5e1;
-            font-weight: 600;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .form-control {
-            background: rgba(15, 23, 42, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: white;
-            transition: all 0.3s ease;
+            background: #ffffff;
+            border: 1px solid var(--wecom-border);
+            border-radius: 4px;
+            color: #333;
+            transition: all 0.2s ease;
+            padding: 0.6rem 1rem;
         }
 
         .form-control:focus {
-            background: rgba(15, 23, 42, 0.9);
-            border-color: rgba(0, 255, 136, 0.6);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-            color: white;
+            background: #ffffff;
+            border-color: var(--wecom-green);
+            box-shadow: 0 0 0 3px var(--wecom-green-light);
+            color: #333;
         }
 
         .form-control::placeholder {
-            color: #64748b;
+            color: var(--wecom-gray);
+        }
+
+        .form-select {
+            background: #ffffff;
+            border: 1px solid var(--wecom-border);
+            border-radius: 4px;
+            color: #333;
+        }
+
+        .form-select:focus {
+            border-color: var(--wecom-green);
+            box-shadow: 0 0 0 3px var(--wecom-green-light);
         }
 
         /* Page Title */
         h1 {
-            font-weight: 800;
-            background: linear-gradient(135deg, #00ff88 0%, #00c8ff 50%, #ff0080 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
         }
 
         h2, h3, h4, h5, h6 {
-            color: white;
+            color: #333;
+            font-weight: 600;
         }
 
         a {
-            color: #00c8ff;
+            color: var(--wecom-green);
             text-decoration: none;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
         a:hover {
-            color: #00ff88;
+            color: var(--wecom-green-hover);
         }
 
         /* Badge */
         .badge {
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            font-weight: 600;
+            border-radius: 4px;
+            padding: 0.35rem 0.75rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .badge-success {
+            background: var(--wecom-green-light);
+            color: var(--wecom-green);
+        }
+
+        .badge-danger {
+            background: #fff1f0;
+            color: #ff4d4f;
+        }
+
+        .badge-warning {
+            background: #fffbe6;
+            color: #faad14;
+        }
+
+        .badge-info {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+
+        /* Pagination */
+        .pagination .page-link {
+            color: #333;
+            border: 1px solid var(--wecom-border);
+            margin: 0 2px;
+            border-radius: 4px;
+        }
+
+        .pagination .page-link:hover {
+            background: var(--wecom-gray-light);
+            color: var(--wecom-green);
+        }
+
+        .pagination .page-item.active .page-link {
+            background: var(--wecom-green);
+            border-color: var(--wecom-green);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Particles -->
-    <div class="particles" id="particles"></div>
-
-    <!-- Gradient Orbs -->
-    <div class="gradient-orb orb-1"></div>
-    <div class="gradient-orb orb-2"></div>
-
     @if(auth()->check())
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-2 d-none d-md-block sidebar">
                 <div class="position-sticky pt-3">
-                    <div class="text-center mb-4">
-                        <h4 class="text-white" style="font-weight: 800; background: linear-gradient(135deg, #00ff88 0%, #00c8ff 50%, #ff0080 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                            <i class="bi bi-lightning-charge-fill me-2"></i>YUSU POWER
+                    <div class="text-center mb-4 p-3">
+                        <h4 class="mb-1" style="font-weight: 600; color: #333;">
+                            <i class="bi bi-chat-dots-fill me-2" style="color: var(--wecom-green);"></i>YUSU POWER
                         </h4>
-                        <p class="text-white-50 small">Welcome, {{ auth()->user()->name }}</p>
+                        <p class="small" style="color: var(--wecom-gray);">Welcome, {{ auth()->user()->name }}</p>
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -469,7 +470,7 @@
                         <li class="nav-item mt-4">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="nav-link text-danger w-100 text-start" style="background: none; border: none; cursor: pointer;">
+                                <button type="submit" class="nav-link w-100 text-start" style="background: none; border: none; cursor: pointer; color: #ff4d4f;">
                                     <i class="bi bi-box-arrow-right"></i> Logout
                                 </button>
                             </form>
@@ -491,29 +492,5 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
-
-    <script>
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                
-                const colors = ['#00ff88', '#00c8ff', '#ff0080', '#ffaa00'];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.boxShadow = `0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        createParticles();
-    </script>
 </body>
 </html>
