@@ -11,6 +11,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ApprovalController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -111,4 +112,14 @@ Route::middleware(['auth'])->group(function () {
         $users = \App\Models\User::all();
         return view('directory.index', compact('users'));
     })->name('directory.index');
+
+    // Approvals
+    Route::prefix('approvals')->group(function () {
+        Route::get('/', [ApprovalController::class, 'index'])->name('approvals.index');
+        Route::get('/create', [ApprovalController::class, 'create'])->name('approvals.create');
+        Route::post('/', [ApprovalController::class, 'store'])->name('approvals.store');
+        Route::get('/{id}', [ApprovalController::class, 'show'])->name('approvals.show');
+        Route::post('/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.approve');
+        Route::post('/{id}/reject', [ApprovalController::class, 'reject'])->name('approvals.reject');
+    });
 });

@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
+
+    public function requestedApprovals()
+    {
+        return $this->hasMany(Approval::class, 'requester_id');
+    }
+
+    public function approvalsToReview()
+    {
+        return $this->hasMany(Approval::class, 'approver_id');
+    }
 }

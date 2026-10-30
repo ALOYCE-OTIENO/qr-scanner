@@ -12,25 +12,29 @@
 
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="stat-card purple">
+        <div class="stat-card">
+            <i class="bi bi-people"></i>
             <h3><?php echo e($totalEmployees); ?></h3>
             <p>Total Employees</p>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card blue">
+        <div class="stat-card">
+            <i class="bi bi-calendar-check"></i>
             <h3><?php echo e($presentToday); ?></h3>
             <p>Present Today</p>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card green">
+        <div class="stat-card">
+            <i class="bi bi-clipboard-data"></i>
             <h3><?php echo e($jobOutputsToday); ?></h3>
             <p>Job Outputs Today</p>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card orange">
+        <div class="stat-card">
+            <i class="bi bi-clock-history"></i>
             <h3><?php echo e($lateToday); ?></h3>
             <p>Late Arrivals</p>
         </div>
@@ -85,7 +89,7 @@
                                         <td><?php echo e($attendance->date->format('M d, Y')); ?></td>
                                         <td><?php echo e($attendance->check_in_time); ?></td>
                                         <td>
-                                            <span class="badge bg-<?php echo e($attendance->status === 'present' ? 'success' : 'warning'); ?>">
+                                            <span class="badge <?php echo e($attendance->status === 'present' ? 'badge-success' : 'badge-warning'); ?>">
                                                 <?php echo e(ucfirst($attendance->status)); ?>
 
                                             </span>
