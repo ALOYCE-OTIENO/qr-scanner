@@ -61,4 +61,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Approval::class, 'approver_id');
     }
+
+    public function createdTasks()
+    {
+        return $this->hasMany(Task::class, 'creator_id');
+    }
+
+    public function assignedTasks()
+    {
+        return $this->hasMany(Task::class, 'assignee_id');
+    }
 }

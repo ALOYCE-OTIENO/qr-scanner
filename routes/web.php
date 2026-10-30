@@ -12,6 +12,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -121,5 +122,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}', [ApprovalController::class, 'show'])->name('approvals.show');
         Route::post('/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.approve');
         Route::post('/{id}/reject', [ApprovalController::class, 'reject'])->name('approvals.reject');
+    });
+
+    // Tasks
+    Route::prefix('tasks')->group(function () {
+        Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
+        Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
+        Route::post('/', [TaskController::class, 'store'])->name('tasks.store');
+        Route::get('/{id}', [TaskController::class, 'show'])->name('tasks.show');
+        Route::get('/{id}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+        Route::put('/{id}', [TaskController::class, 'update'])->name('tasks.update');
+        Route::delete('/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+        Route::post('/{id}/status', [TaskController::class, 'updateStatus'])->name('tasks.update-status');
     });
 });
