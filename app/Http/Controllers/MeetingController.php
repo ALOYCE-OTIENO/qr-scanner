@@ -11,7 +11,20 @@ class MeetingController extends Controller
 {
     public function index()
     {
-        $meetings = Meeting::with(['organizer', 'participants'])->orderBy('start_time', 'desc')->get();
+        $user = Auth::user();
+        
+        if ($user->isAdmin()) {
+            // Admin sees all meetings
+            $meetings = Meeting::with(['organizer', 'participants'])->orderBy('start_time', 'desc')->get();
+        } else {
+            // Employee sees only meetings they're participating in or organized
+            $meetings = Meeting::whereHas('participants', function($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->orWhere('organizer_id', $user->id)
+            ->with(['organizer', 'participants'])
+            ->orderBy('start_time', 'desc')
+            ->get();
+        }
         
         return view('meetings.index', compact('meetings'));
     }

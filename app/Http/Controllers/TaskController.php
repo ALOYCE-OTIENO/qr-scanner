@@ -13,11 +13,15 @@ class TaskController extends Controller
     {
         $user = Auth::user();
         
-        // Get tasks created by user
-        $myCreatedTasks = $user->createdTasks()->with(['creator', 'assignee'])->orderBy('created_at', 'desc')->get();
-        
-        // Get tasks assigned to user
-        $myAssignedTasks = $user->assignedTasks()->with(['creator', 'assignee'])->orderBy('created_at', 'desc')->get();
+        if ($user->isAdmin()) {
+            // Admin sees all tasks
+            $myCreatedTasks = Task::with(['creator', 'assignee'])->orderBy('created_at', 'desc')->get();
+            $myAssignedTasks = collect();
+        } else {
+            // Employee sees only tasks assigned to them
+            $myCreatedTasks = collect();
+            $myAssignedTasks = $user->assignedTasks()->with(['creator', 'assignee'])->orderBy('created_at', 'desc')->get();
+        }
 
         return view('tasks.index', compact('myCreatedTasks', 'myAssignedTasks'));
     }

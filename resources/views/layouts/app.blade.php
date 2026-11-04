@@ -506,7 +506,12 @@
                                 <i class="bi bi-clipboard-data"></i> Job Output
                             </a>
                         </li>
+                        
                         @if(auth()->user()->isAdmin())
+                        <!-- Admin-only Features -->
+                        <li class="nav-item mt-3">
+                            <small class="text-muted ms-3" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Management</small>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}" href="{{ route('employees.index') }}">
                                 <i class="bi bi-people"></i> Employees
@@ -536,13 +541,6 @@
                                 </ul>
                             </div>
                         </li>
-                        @endif
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('qr.*') ? 'active' : '' }}" href="{{ route('qr.scan') }}">
-                                <i class="bi bi-qr-code-scan"></i> QR Scanner
-                            </a>
-                        </li>
-                        @if(auth()->user()->isAdmin())
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('qr.door') ? 'active' : '' }}" href="{{ route('qr.door') }}">
                                 <i class="bi bi-qr-code"></i> Door QR Code
@@ -550,9 +548,15 @@
                         </li>
                         @endif
                         
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('qr.*') ? 'active' : '' }}" href="{{ route('qr.scan') }}">
+                                <i class="bi bi-qr-code-scan"></i> QR Scanner
+                            </a>
+                        </li>
+                        
                         <!-- WeCom Features -->
                         <li class="nav-item mt-3">
-                            <small class="text-muted ms-3" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">WeCom</small>
+                            <small class="text-muted ms-3" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Collaboration</small>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('messages.*') ? 'active' : '' }}" href="{{ route('messages.index') }}">
