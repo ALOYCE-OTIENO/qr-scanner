@@ -107,8 +107,6 @@
             @endif
         </div>
     </div>
-@endif
-
 @else
     <div class="card">
         <div class="card-body text-center py-5">
