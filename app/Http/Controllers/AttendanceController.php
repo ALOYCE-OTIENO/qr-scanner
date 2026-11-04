@@ -17,7 +17,7 @@ class AttendanceController extends Controller
 
         // If admin and no specific employee selected, show all employees' attendance
         if (Auth::user()->isAdmin() && !$employeeId) {
-            $employees = Employee::with(['attendance' => function($query) use ($today) {
+            $employees = Employee::with(['attendances' => function($query) use ($today) {
                 $query->where('date', $today);
             }])->get();
             return view('attendance.admin-index', compact('employees', 'today'));

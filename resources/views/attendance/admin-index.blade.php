@@ -57,23 +57,23 @@
                                 </td>
                                 <td>{{ $employee->employee_id }}</td>
                                 <td>
-                                    @if($employee->attendance && $employee->attendance->check_in_time)
-                                        <span style="font-weight: 600; color: var(--wecom-green);">{{ $employee->attendance->check_in_time }}</span>
+                                    @if($employee->attendances && $employee->attendances->first() && $employee->attendances->first()->check_in_time)
+                                        <span style="font-weight: 600; color: var(--wecom-green);">{{ $employee->attendances->first()->check_in_time }}</span>
                                     @else
                                         <span class="text-muted">Not checked in</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if($employee->attendance && $employee->attendance->check_out_time)
-                                        <span style="font-weight: 600; color: #333;">{{ $employee->attendance->check_out_time }}</span>
+                                    @if($employee->attendances && $employee->attendances->first() && $employee->attendances->first()->check_out_time)
+                                        <span style="font-weight: 600; color: #333;">{{ $employee->attendances->first()->check_out_time }}</span>
                                     @else
                                         <span class="text-muted">Not checked out</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if($employee->attendance)
-                                        <span class="badge {{ $employee->attendance->status === 'present' ? 'badge-success' : 'badge-warning' }}">
-                                            {{ ucfirst($employee->attendance->status) }}
+                                    @if($employee->attendances && $employee->attendances->first())
+                                        <span class="badge {{ $employee->attendances->first()->status === 'present' ? 'badge-success' : 'badge-warning' }}">
+                                            {{ ucfirst($employee->attendances->first()->status) }}
                                         </span>
                                     @else
                                         <span class="badge bg-secondary">Absent</span>
