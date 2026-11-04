@@ -70,10 +70,10 @@ class AuthController extends Controller
             ])->onlyInput('email');
         }
 
-        // Attempt authentication (trim to remove extra spaces)
+        // Attempt authentication (trim email but keep password as-is)
         $credentials = [
             'email' => trim($request->email),
-            'password' => trim($request->password),
+            'password' => $request->password,
         ];
 
         if (Auth::attempt($credentials)) {
