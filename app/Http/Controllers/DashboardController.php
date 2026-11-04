@@ -86,7 +86,25 @@ class DashboardController extends Controller
             $employee = Employee::where('email', $user->email)->first();
             
             if (!$employee) {
-                return view('dashboard.user');
+                // User without employee record - show minimal dashboard
+                $myPendingTasks = \App\Models\Task::where('assignee_id', $user->id)
+                    ->where('status', 'pending')
+                    ->count();
+                
+                $myCompletedTasks = \App\Models\Task::where('assignee_id', $user->id)
+                    ->where('status', 'completed')
+                    ->count();
+
+                $myPendingApprovals = \App\Models\Approval::where('requester_id', $user->id)
+                    ->where('status', 'pending')
+                    ->count();
+
+                return view('dashboard.user', compact(
+                    'employee',
+                    'myPendingTasks',
+                    'myCompletedTasks',
+                    'myPendingApprovals'
+                ));
             }
 
             // Personal attendance stats
