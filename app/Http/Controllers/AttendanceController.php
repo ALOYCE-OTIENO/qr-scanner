@@ -14,23 +14,30 @@ class AttendanceController extends Controller
     {
         $employeeId = $request->input('employee_id');
         $today = Carbon::today();
+        $user = Auth::user();
 
         // If admin and no specific employee selected, show all employees' attendance
-        if (Auth::user()->isAdmin() && !$employeeId) {
+        if ($user->isAdmin() && !$employeeId) {
             $employees = Employee::with(['attendances' => function($query) use ($today) {
                 $query->where('date', $today);
             }])->get();
             return view('attendance.admin-index', compact('employees', 'today'));
         }
 
-        // If specific employee selected or user is not admin
-        if ($employeeId) {
+        // Regular employees or admin with specific employee selection
+        if ($user->isAdmin() && $employeeId) {
+            // Admin viewing specific employee
             $employee = Employee::find($employeeId);
-            $attendance = Attendance::where('employee_id', $employeeId)
+        } else {
+            // Regular employee - automatically find their employee record
+            $employee = Employee::where('email', $user->email)->first();
+        }
+
+        if ($employee) {
+            $attendance = Attendance::where('employee_id', $employee->id)
                 ->where('date', $today)
                 ->first();
         } else {
-            $employee = null;
             $attendance = null;
         }
 
@@ -39,12 +46,22 @@ class AttendanceController extends Controller
 
     public function checkIn(Request $request)
     {
-        $request->validate([
-            'employee_id' => 'required|exists:employees,id',
-            'qr_code' => 'required|string',
-        ]);
+        $user = Auth::user();
+        
+        // Regular employees must check in for themselves
+        if (!$user->isAdmin()) {
+            $employee = Employee::where('email', $user->email)->first();
+            if (!$employee) {
+                return back()->with('error', 'No employee record found for your account.');
+            }
+        } else {
+            // Admin can check in for any employee
+            $request->validate([
+                'employee_id' => 'required|exists:employees,id',
+            ]);
+            $employee = Employee::find($request->employee_id);
+        }
 
-        $employee = Employee::find($request->employee_id);
         $today = Carbon::today();
 
         // Check if already checked in today
@@ -69,22 +86,38 @@ class AttendanceController extends Controller
             'employee_id' => $employee->id,
             'date' => $today,
             'check_in_time' => $checkInTime->format('H:i:s'),
-            'check_in_qr_code' => $request->qr_code,
+            'check_in_qr_code' => $employee->qr_code ?? 'self',
             'status' => $status,
         ]);
 
-        return redirect()->route('attendance.index', ['employee_id' => $employee->id])
+        return redirect()->route('attendance.index')
             ->with('success', "Checked in successfully at {$checkInTime->format('H:i')}");
     }
 
     public function checkOut(Request $request)
     {
-        $request->validate([
-            'attendance_id' => 'required|exists:attendances,id',
-            'qr_code' => 'required|string',
-        ]);
+        $user = Auth::user();
+        
+        // Regular employees check out for themselves
+        if (!$user->isAdmin()) {
+            $employee = Employee::where('email', $user->email)->first();
+            if (!$employee) {
+                return back()->with('error', 'No employee record found for your account.');
+            }
+            $attendance = Attendance::where('employee_id', $employee->id)
+                ->where('date', Carbon::today())
+                ->first();
+        } else {
+            // Admin can check out for any attendance
+            $request->validate([
+                'attendance_id' => 'required|exists:attendances,id',
+            ]);
+            $attendance = Attendance::find($request->attendance_id);
+        }
 
-        $attendance = Attendance::find($request->attendance_id);
+        if (!$attendance) {
+            return back()->with('error', 'No active attendance record found.');
+        }
 
         if ($attendance->check_out_time) {
             return back()->with('error', 'You have already checked out today.');
@@ -94,10 +127,10 @@ class AttendanceController extends Controller
 
         $attendance->update([
             'check_out_time' => $checkOutTime->format('H:i:s'),
-            'check_out_qr_code' => $request->qr_code,
+            'check_out_qr_code' => $attendance->employee->qr_code ?? 'self',
         ]);
 
-        return redirect()->route('attendance.index', ['employee_id' => $attendance->employee_id])
+        return redirect()->route('attendance.index')
             ->with('success', "Checked out successfully at {$checkOutTime->format('H:i')}");
     }
 

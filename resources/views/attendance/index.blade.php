@@ -57,7 +57,13 @@
 @if($employee)
     <div class="card">
         <div class="card-header bg-white">
-            <h5 class="mb-0">Employee: {{ $employee->full_name }}</h5>
+            <h5 class="mb-0">
+                @if(auth()->user()->isAdmin())
+                    Employee: {{ $employee->full_name }}
+                @else
+                    My Attendance
+                @endif
+            </h5>
         </div>
         <div class="card-body">
             @if($attendance)
@@ -77,14 +83,22 @@
                     </div>
                     <div class="col-md-6">
                         @if(!$attendance->check_out_time)
+                            @if(auth()->user()->isAdmin())
                             <form method="POST" action="{{ route('attendance.check-out') }}">
                                 @csrf
                                 <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
-                                <input type="hidden" name="qr_code" value="{{ $employee->qr_code }}">
                                 <button type="submit" class="btn btn-warning btn-lg w-100">
                                     <i class="bi bi-box-arrow-right"></i> Check Out
                                 </button>
                             </form>
+                            @else
+                            <form method="POST" action="{{ route('attendance.check-out') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-wecom-primary w-100">
+                                    <i class="bi bi-box-arrow-right"></i> Check Out
+                                </button>
+                            </form>
+                            @endif
                         @else
                             <div class="alert alert-info">
                                 <i class="bi bi-check-circle"></i> You have already checked out today.
@@ -96,12 +110,19 @@
                 <div class="text-center py-5">
                     <i class="bi bi-calendar-x" style="font-size: 4rem; color: #667eea;"></i>
                     <h4 class="mt-3">Not Checked In Today</h4>
-                    <p class="text-muted">Scan your QR code to check in</p>
+                    <p class="text-muted">
+                        @if(auth()->user()->isAdmin())
+                            Scan employee's QR code to check in
+                        @else
+                        Click below to check in for your shift
+                        @endif
+                    </p>
                     <form method="POST" action="{{ route('attendance.check-in') }}">
                         @csrf
+                        @if(auth()->user()->isAdmin())
                         <input type="hidden" name="employee_id" value="{{ $employee->id }}">
-                        <input type="hidden" name="qr_code" value="{{ $employee->qr_code }}">
-                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                        @endif
+                        <button type="submit" class="btn btn-wecom-primary btn-lg px-5">
                             <i class="bi bi-box-arrow-in-right"></i> Check In
                         </button>
                     </form>
