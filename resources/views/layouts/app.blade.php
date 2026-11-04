@@ -388,25 +388,107 @@
         @media (max-width: 768px) {
             .main-content {
                 padding: 1rem;
+                padding-bottom: 80px;
             }
             
             .stat-card h3 {
                 font-size: 1.5rem;
             }
         }
+
+        .wecom-header {
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4d4f;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wecom-bottom-nav {
+            background: white;
+            border-top: 1px solid #e5e5e5;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #999;
+            font-size: 0.75rem;
+            padding: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--wecom-green);
+        }
+
+        .badge-info {
+            background: #1890ff;
+            color: white;
+        }
+
+        .badge-success {
+            background: var(--wecom-green);
+            color: white;
+        }
     </style>
 </head>
 <body>
     @if(auth()->check())
     <div class="container-fluid">
+        <!-- WeCom-style Header -->
+        <div class="wecom-header d-flex justify-content-between align-items-center py-3 px-4 mb-3">
+            <div class="d-flex align-items-center">
+                <div style="width: 40px; height: 40px; background: var(--wecom-green); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem; font-weight: 600;">
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0" style="font-weight: 600; color: #333;">{{ auth()->user()->name }}</h6>
+                    <small style="color: var(--wecom-gray);">{{ auth()->user()->email }}</small>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{{ route('notifications.index') }}" class="position-relative">
+                    <i class="bi bi-bell" style="font-size: 1.5rem; color: #333;"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #333;">
+                        <i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <div class="row">
+            <!-- Desktop Sidebar -->
             <nav class="col-md-2 d-none d-md-block sidebar">
                 <div class="position-sticky pt-3">
                     <div class="text-center mb-4 p-3">
                         <h4 class="mb-1" style="font-weight: 600; color: #333;">
                             <i class="bi bi-chat-dots-fill me-2" style="color: var(--wecom-green);"></i>YUSU POWER
                         </h4>
-                        <p class="small" style="color: var(--wecom-gray);">Welcome, {{ auth()->user()->name }}</p>
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -462,7 +544,7 @@
                         </li>
                         @if(auth()->user()->isAdmin())
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('qr.door') ? 'active' : '' }}" href="{{ route('qr.door') }}">
+                            <a class="nav-link {{ request()->is('qr.door') ? 'active' : '' }}" href="{{ route('qr.door') }}">
                                 <i class="bi bi-qr-code"></i> Door QR Code
                             </a>
                         </li>
@@ -507,14 +589,6 @@
                                 <i class="bi bi-person-badge"></i> Directory
                             </a>
                         </li>
-                        <li class="nav-item mt-4">
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="nav-link w-100 text-start" style="background: none; border: none; cursor: pointer; color: #ff4d4f;">
-                                    <i class="bi bi-box-arrow-right"></i> Logout
-                                </button>
-                            </form>
-                        </li>
                     </ul>
                 </div>
             </nav>
@@ -522,6 +596,32 @@
             <main class="col-md-10 ms-sm-auto main-content">
                 @yield('content')
             </main>
+        </div>
+
+        <!-- Mobile Bottom Navigation -->
+        <div class="d-md-none wecom-bottom-nav fixed-bottom w-100">
+            <div class="d-flex justify-content-around align-items-center py-2">
+                <a href="{{ route('messages.index') }}" class="bottom-nav-item {{ request()->routeIs('messages.*') ? 'active' : '' }}">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Chat</span>
+                </a>
+                <a href="{{ route('groups.index') }}" class="bottom-nav-item {{ request()->routeIs('groups.*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i>
+                    <span>Groups</span>
+                </a>
+                <a href="{{ route('tasks.index') }}" class="bottom-nav-item {{ request()->routeIs('tasks.*') ? 'active' : '' }}">
+                    <i class="bi bi-list-check"></i>
+                    <span>Tasks</span>
+                </a>
+                <a href="{{ route('meetings.index') }}" class="bottom-nav-item {{ request()->routeIs('meetings.*') ? 'active' : '' }}">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>Meetings</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="bottom-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <i class="bi bi-grid"></i>
+                    <span>More</span>
+                </a>
+            </div>
         </div>
     </div>
     @else
