@@ -14,7 +14,16 @@ class AttendanceController extends Controller
     {
         $employeeId = $request->input('employee_id');
         $today = Carbon::today();
-        
+
+        // If admin and no specific employee selected, show all employees' attendance
+        if (Auth::user()->isAdmin() && !$employeeId) {
+            $employees = Employee::with(['attendance' => function($query) use ($today) {
+                $query->where('date', $today);
+            }])->get();
+            return view('attendance.admin-index', compact('employees', 'today'));
+        }
+
+        // If specific employee selected or user is not admin
         if ($employeeId) {
             $employee = Employee::find($employeeId);
             $attendance = Attendance::where('employee_id', $employeeId)

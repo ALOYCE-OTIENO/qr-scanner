@@ -1,9 +1,11 @@
 <?php $__env->startSection('title', 'Dashboard'); ?>
 
 <?php $__env->startSection('content'); ?>
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Dashboard</h1>
-    <span class="text-muted"><?php echo e(now()->format('l, F j, Y')); ?></span>
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 style="font-weight: 600; color: #333;">Dashboard</h1>
+        <p class="text-muted"><?php echo e(now()->format('l, F j, Y')); ?></p>
+    </div>
 </div>
 
 <?php if(session('success')): ?>
@@ -11,28 +13,28 @@
 <?php endif; ?>
 
 <div class="row mb-4">
-    <div class="col-md-3">
+    <div class="col-6 col-md-3 mb-3">
         <div class="stat-card">
             <i class="bi bi-people"></i>
             <h3><?php echo e($totalEmployees); ?></h3>
             <p>Total Employees</p>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-6 col-md-3 mb-3">
         <div class="stat-card">
             <i class="bi bi-calendar-check"></i>
             <h3><?php echo e($presentToday); ?></h3>
             <p>Present Today</p>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-6 col-md-3 mb-3">
         <div class="stat-card">
             <i class="bi bi-clipboard-data"></i>
             <h3><?php echo e($jobOutputsToday); ?></h3>
             <p>Job Outputs Today</p>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-6 col-md-3 mb-3">
         <div class="stat-card">
             <i class="bi bi-clock-history"></i>
             <h3><?php echo e($lateToday); ?></h3>
