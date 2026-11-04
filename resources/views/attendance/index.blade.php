@@ -17,6 +17,7 @@
 @endif
 
 <!-- Check-in Confirmation Modal -->
+@if(isset($employee) && isset($attendance))
 <div class="modal fade" id="checkInConfirmModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -51,6 +52,7 @@
         </div>
     </div>
 </div>
+@endif
 
 @if($employee)
     <div class="card">
