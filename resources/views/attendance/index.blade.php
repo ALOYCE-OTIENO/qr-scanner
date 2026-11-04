@@ -109,14 +109,7 @@
     </div>
 @endif
 
-@if($employee && $attendance && session('success'))
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var modal = new bootstrap.Modal(document.getElementById('checkInConfirmModal'));
-    modal.show();
-});
-</script>
-@endif
+@else
     <div class="card">
         <div class="card-body text-center py-5">
             <i class="bi bi-qr-code-scan" style="font-size: 4rem; color: #667eea;"></i>
@@ -127,5 +120,14 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
         </div>
     </div>
+@endif
+
+@if($employee && $attendance && session('success'))
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = new bootstrap.Modal(document.getElementById('checkInConfirmModal'));
+    modal.show();
+});
+</script>
 @endif
 @endsection
