@@ -232,6 +232,16 @@
             </div>
             @endif
 
+            @if($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <div class="row g-3">
                 <div class="col-md-6">
                     <div class="login-option" onclick="selectLoginType('admin')">
@@ -253,7 +263,7 @@
                 </div>
             </div>
 
-            <form id="loginForm" action="{{ route('login.post') }}" method="POST" class="mt-4" style="display: none;">
+            <form id="loginForm" action="{{ route('login') }}" method="POST" class="mt-4" style="display: none;">
                 @csrf
                 <input type="hidden" name="login_type" id="loginType" value="">
 
