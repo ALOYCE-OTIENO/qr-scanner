@@ -58,14 +58,14 @@
                                 <td>{{ $employee->employee_id }}</td>
                                 <td>
                                     @if($employee->attendance && $employee->attendance->check_in_time)
-                                        {{ $employee->attendance->check_in_time }}
+                                        <span style="font-weight: 600; color: var(--wecom-green);">{{ $employee->attendance->check_in_time }}</span>
                                     @else
                                         <span class="text-muted">Not checked in</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if($employee->attendance && $employee->attendance->check_out_time)
-                                        {{ $employee->attendance->check_out_time }}
+                                        <span style="font-weight: 600; color: #333;">{{ $employee->attendance->check_out_time }}</span>
                                     @else
                                         <span class="text-muted">Not checked out</span>
                                     @endif

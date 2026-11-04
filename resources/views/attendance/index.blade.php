@@ -5,7 +5,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Attendance</h1>
-    <a href="{{ route('attendance.history') }}" class="btn btn-outline-primary">View History</a>
+    <a href="{{ route('attendance.history') }}" class="btn btn-wecom-outline">View History</a>
 </div>
 
 @if(session('success'))
@@ -15,6 +15,42 @@
 @if(session('error'))
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
+
+<!-- Check-in Confirmation Modal -->
+<div class="modal fade" id="checkInConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: 1px solid var(--wecom-border);">
+                <h5 class="modal-title" style="font-weight: 600;">Check-In Successful! ✓</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <div style="width: 80px; height: 80px; background: var(--wecom-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; margin: 0 auto 1.5rem;">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+                <h4 style="font-weight: 600; color: #333; margin-bottom: 0.5rem;">{{ $employee->full_name }}</h4>
+                <p class="text-muted mb-3">Employee ID: {{ $employee->employee_id }}</p>
+                <div class="card bg-light border-0" style="background: var(--wecom-gray-light);">
+                    <div class="card-body py-3">
+                        <p class="mb-1" style="color: var(--wecom-gray);">Check-in Time</p>
+                        <h3 style="font-weight: 600; color: var(--wecom-green); font-size: 2rem;">{{ $attendance->check_in_time }}</h3>
+                        <p class="mb-0 small text-muted">{{ $attendance->date->format('l, F j, Y') }}</p>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <span class="badge {{ $attendance->status === 'present' ? 'badge-success' : 'badge-warning' }} fs-6">
+                        {{ ucfirst($attendance->status) }}
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid var(--wecom-border);">
+                <button type="button" class="btn btn-wecom-primary" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-2"></i>Got it
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @if($employee)
     <div class="card">
@@ -71,7 +107,16 @@
             @endif
         </div>
     </div>
-@else
+@endif
+
+@if($employee && $attendance && session('success'))
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = new bootstrap.Modal(document.getElementById('checkInConfirmModal'));
+    modal.show();
+});
+</script>
+@endif
     <div class="card">
         <div class="card-body text-center py-5">
             <i class="bi bi-qr-code-scan" style="font-size: 4rem; color: #667eea;"></i>
