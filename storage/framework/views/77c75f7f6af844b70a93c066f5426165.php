@@ -233,6 +233,16 @@
             </div>
             <?php endif; ?>
 
+            <?php if($errors->any()): ?>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li><?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            </div>
+            <?php endif; ?>
+
             <div class="row g-3">
                 <div class="col-md-6">
                     <div class="login-option" onclick="selectLoginType('admin')">
@@ -254,7 +264,7 @@
                 </div>
             </div>
 
-            <form id="loginForm" action="<?php echo e(route('login.post')); ?>" method="POST" class="mt-4" style="display: none;">
+            <form id="loginForm" action="<?php echo e(route('login')); ?>" method="POST" class="mt-4" style="display: none;">
                 <?php echo csrf_field(); ?>
                 <input type="hidden" name="login_type" id="loginType" value="">
 
