@@ -13,6 +13,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\MeetingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -134,5 +135,13 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{id}', [TaskController::class, 'update'])->name('tasks.update');
         Route::delete('/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
         Route::post('/{id}/status', [TaskController::class, 'updateStatus'])->name('tasks.update-status');
+    });
+
+    // Meetings
+    Route::prefix('meetings')->group(function () {
+        Route::get('/', [MeetingController::class, 'index'])->name('meetings.index');
+        Route::get('/create', [MeetingController::class, 'create'])->name('meetings.create');
+        Route::post('/', [MeetingController::class, 'store'])->name('meetings.store');
+        Route::get('/{id}', [MeetingController::class, 'show'])->name('meetings.show');
     });
 });

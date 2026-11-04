@@ -71,4 +71,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class, 'assignee_id');
     }
+
+    public function organizedMeetings()
+    {
+        return $this->hasMany(Meeting::class, 'organizer_id');
+    }
+
+    public function meetings()
+    {
+        return $this->belongsToMany(Meeting::class, 'meeting_user')->withTimestamps();
+    }
 }

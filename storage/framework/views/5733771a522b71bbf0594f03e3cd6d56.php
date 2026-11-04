@@ -483,6 +483,16 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link <?php echo e(request()->routeIs('approvals.*') ? 'active' : ''); ?>" href="<?php echo e(route('approvals.index')); ?>">
+                                <i class="bi bi-file-earmark-check"></i> Approvals
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo e(request()->routeIs('tasks.*') ? 'active' : ''); ?>" href="<?php echo e(route('tasks.index')); ?>">
+                                <i class="bi bi-list-check"></i> Tasks
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link <?php echo e(request()->routeIs('notifications.*') ? 'active' : ''); ?>" href="<?php echo e(route('notifications.index')); ?>">
                                 <i class="bi bi-bell"></i> Notifications
                             </a>
