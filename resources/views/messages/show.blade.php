@@ -10,6 +10,21 @@
         </a>
         {{ $otherUser->name }}
     </h1>
+    <div class="d-flex gap-2">
+        <form method="POST" action="{{ route('messages.destroy-selected') }}" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-sm btn-danger">
+                <i class="bi bi-trash"></i> Delete Selected
+            </button>
+        </form>
+        <form method="POST" action="{{ route('messages.destroy-all', $otherUser->id) }}" class="d-inline" onsubmit="return confirm('Delete all messages with {{ $otherUser->name }}?');">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger">
+                <i class="bi bi-trash3"></i> Delete All
+            </button>
+        </form>
+    </div>
 </div>
 
 <div class="card">
@@ -26,10 +41,24 @@
                             </div>
                         @endif
                         <div class="{{ $message->sender_id === auth()->id() ? 'bg-success text-white' : 'bg-light' }} rounded p-3" style="max-width: 70%;">
-                            <p class="mb-1" style="font-size: 0.9rem;">{{ $message->content }}</p>
-                            <small class="{{ $message->sender_id === auth()->id() ? 'text-white-50' : 'text-muted' }}" style="font-size: 0.75rem;">
-                                {{ $message->created_at->format('H:i') }}
-                            </small>
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="me-2">
+                                    <input type="checkbox" class="message-checkbox" value="{{ $message->id }}">
+                                </div>
+                                <div>
+                                    <p class="mb-1" style="font-size: 0.9rem;">{{ $message->content }}</p>
+                                    <small class="{{ $message->sender_id === auth()->id() ? 'text-white-50' : 'text-muted' }}" style="font-size: 0.75rem;">
+                                        {{ $message->created_at->format('H:i') }}
+                                    </small>
+                                </div>
+                                <form method="POST" action="{{ route('messages.destroy', $message->id) }}" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-link text-muted" style="padding: 0;">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @endforeach

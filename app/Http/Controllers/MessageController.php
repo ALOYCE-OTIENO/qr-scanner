@@ -75,4 +75,51 @@ class MessageController extends Controller
 
         return back()->with('success', 'Message sent successfully');
     }
+
+    public function destroy($id)
+    {
+        $message = Message::findOrFail($id);
+        
+        // Only allow sender or receiver to delete
+        if ($message->sender_id !== Auth::id() && $message->receiver_id !== Auth::id()) {
+            return back()->with('error', 'You cannot delete this message');
+        }
+
+        $message->delete();
+        return back()->with('success', 'Message deleted successfully');
+    }
+
+    public function destroySelected(Request $request)
+    {
+        $request->validate([
+            'message_ids' => 'required|array',
+            'message_ids.*' => 'exists:messages,id'
+        ]);
+
+        $count = 0;
+        foreach ($request->message_ids as $messageId) {
+            $message = Message::find($messageId);
+            if ($message && ($message->sender_id === Auth::id() || $message->receiver_id === Auth::id())) {
+                $message->delete();
+                $count++;
+            }
+        }
+
+        return back()->with('success', $count . ' messages deleted successfully');
+    }
+
+    public function destroyAll($userId)
+    {
+        $user = Auth::user();
+        
+        $count = Message::where(function ($query) use ($user, $userId) {
+            $query->where('sender_id', $user->id)
+                  ->where('receiver_id', $userId);
+        })->orWhere(function ($query) use ($user, $userId) {
+            $query->where('sender_id', $userId)
+                  ->where('receiver_id', $user->id);
+        })->delete();
+
+        return redirect()->route('messages.index')->with('success', 'All messages deleted successfully');
+    }
 }

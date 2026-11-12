@@ -90,6 +90,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [MessageController::class, 'index'])->name('messages.index');
         Route::get('/{userId}', [MessageController::class, 'show'])->name('messages.show');
         Route::post('/', [MessageController::class, 'store'])->name('messages.store');
+        Route::delete('/{id}', [MessageController::class, 'destroy'])->name('messages.destroy');
+        Route::post('/delete-selected', [MessageController::class, 'destroySelected'])->name('messages.destroy-selected');
+        Route::delete('/all/{userId}', [MessageController::class, 'destroyAll'])->name('messages.destroy-all');
     });
 
     // WeCom Features - Groups
