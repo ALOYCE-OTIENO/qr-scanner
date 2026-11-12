@@ -2,6 +2,44 @@
 
 @section('title', 'Attendance')
 
+@push('styles')
+<style>
+    #map {
+        height: 300px;
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    .location-info {
+        background: var(--wecom-gray-light);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    .location-info p {
+        margin: 0.5rem 0;
+    }
+    .distance-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 600;
+    }
+    .distance-valid {
+        background: #d4edda;
+        color: #155724;
+    }
+    .distance-invalid {
+        background: #f8d7da;
+        color: #721c24;
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY', '') }}&callback=initMap" async defer></script>
+@endpush
+
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Attendance</h1>
@@ -66,16 +104,29 @@
             </h5>
         </div>
         <div class="card-body">
+            <!-- Location Information -->
+            <div id="locationInfo">
+                <div class="alert alert-info">
+                    <i class="bi bi-geo-alt"></i> Getting your location...
+                </div>
+            </div>
+
             @if($attendance)
                 <div class="row">
                     <div class="col-md-6">
                         <p><strong>Date:</strong> {{ $attendance->date->format('l, F j, Y') }}</p>
                         <p><strong>Check In:</strong> {{ $attendance->check_in_time }}</p>
+                        @if($attendance->check_in_distance)
+                            <p><strong>Check-in Distance:</strong> {{ $attendance->check_in_distance }}m from factory</p>
+                        @endif
                         @if($attendance->check_out_time)
                             <p><strong>Check Out:</strong> {{ $attendance->check_out_time }}</p>
                             <p><strong>Work Hours:</strong> {{ $attendance->work_hours }}</p>
+                            @if($attendance->check_out_distance)
+                                <p><strong>Check-out Distance:</strong> {{ $attendance->check_out_distance }}m from factory</p>
+                            @endif
                         @endif
-                        <p><strong>Status:</strong> 
+                        <p><strong>Status:</strong>
                             <span class="badge bg-{{ $attendance->status === 'present' ? 'success' : 'warning' }}">
                                 {{ ucfirst($attendance->status) }}
                             </span>
@@ -117,6 +168,7 @@
                         Click below to check in for your shift
                         @endif
                     </p>
+                    <div id="distanceDisplay"></div>
                     <form method="POST" action="{{ route('attendance.check-in') }}">
                         @csrf
                         @if(auth()->user()->isAdmin())
@@ -142,6 +194,164 @@
         </div>
     </div>
 @endif
+
+<!-- Location Capture Form (Hidden) -->
+<form id="locationForm" method="POST" style="display: none;">
+    @csrf
+    <input type="hidden" id="latitude" name="latitude">
+    <input type="hidden" id="longitude" name="longitude">
+</form>
+
+<script>
+let userLocation = null;
+const factoryLat = {{ env('FACTORY_LATITUDE', -1.286389) }};
+const factoryLng = {{ env('FACTORY_LONGITUDE', 36.817223) }};
+const maxDistance = {{ env('MAX_CHECKIN_DISTANCE', 10) }};
+
+// Get user's current location
+function getUserLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                document.getElementById('latitude').value = userLocation.lat;
+                document.getElementById('longitude').value = userLocation.lng;
+
+                const distance = calculateDistance(userLocation.lat, userLocation.lng, factoryLat, factoryLng);
+                updateLocationDisplay(distance, userLocation.lat, userLocation.lng);
+            },
+            function(error) {
+                console.error('Error getting location:', error);
+                showLocationError(error.message);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            }
+        );
+    } else {
+        showLocationError('Geolocation is not supported by this browser.');
+    }
+}
+
+// Calculate distance between two points (Haversine formula)
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371000; // Earth's radius in meters
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+}
+
+// Update location display
+function updateLocationDisplay(distance, lat, lng) {
+    const distanceDisplay = document.getElementById('distanceDisplay');
+    const locationInfo = document.getElementById('locationInfo');
+
+    if (distanceDisplay) {
+        const isValid = distance <= maxDistance;
+        distanceDisplay.innerHTML = `
+            <span class="distance-badge ${isValid ? 'distance-valid' : 'distance-invalid'}">
+                ${distance.toFixed(2)}m from factory
+            </span>
+        `;
+    }
+
+    if (locationInfo) {
+        locationInfo.innerHTML = `
+            <div class="location-info">
+                <p><strong>Your Location:</strong> ${lat.toFixed(6)}, ${lng.toFixed(6)}</p>
+                <p><strong>Factory Location:</strong> ${factoryLat.toFixed(6)}, ${factoryLng.toFixed(6)}</p>
+                <p><strong>Distance:</strong> ${distance.toFixed(2)} meters</p>
+                <p><strong>Status:</strong> ${distance <= maxDistance ? '✓ Within range' : '✗ Out of range'}</p>
+            </div>
+        `;
+    }
+}
+
+// Show location error
+function showLocationError(message) {
+    const locationInfo = document.getElementById('locationInfo');
+    if (locationInfo) {
+        locationInfo.innerHTML = `
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle"></i> Location error: ${message}
+            </div>
+        `;
+    }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    // Get location when page loads
+    getUserLocation();
+
+    // Update location periodically
+    setInterval(getUserLocation, 30000); // Every 30 seconds
+
+    // Add location data to check-in/check-out forms
+    const checkInForm = document.querySelector('form[action*="check-in"]');
+    const checkOutForm = document.querySelector('form[action*="check-out"]');
+
+    if (checkInForm) {
+        checkInForm.addEventListener('submit', function(e) {
+            if (userLocation) {
+                const distance = calculateDistance(userLocation.lat, userLocation.lng, factoryLat, factoryLng);
+                if (distance > maxDistance) {
+                    e.preventDefault();
+                    alert(`You are ${distance.toFixed(2)} meters away from the factory. Check-in is only allowed within ${maxDistance} meters.`);
+                    return false;
+                }
+                // Add location fields to form
+                const latInput = document.createElement('input');
+                latInput.type = 'hidden';
+                latInput.name = 'latitude';
+                latInput.value = userLocation.lat;
+                checkInForm.appendChild(latInput);
+
+                const lngInput = document.createElement('input');
+                lngInput.type = 'hidden';
+                lngInput.name = 'longitude';
+                lngInput.value = userLocation.lng;
+                checkInForm.appendChild(lngInput);
+            }
+        });
+    }
+
+    if (checkOutForm) {
+        checkOutForm.addEventListener('submit', function(e) {
+            if (userLocation) {
+                const distance = calculateDistance(userLocation.lat, userLocation.lng, factoryLat, factoryLng);
+                if (distance > maxDistance) {
+                    e.preventDefault();
+                    alert(`You are ${distance.toFixed(2)} meters away from the factory. Check-out is only allowed within ${maxDistance} meters.`);
+                    return false;
+                }
+                // Add location fields to form
+                const latInput = document.createElement('input');
+                latInput.type = 'hidden';
+                latInput.name = 'latitude';
+                latInput.value = userLocation.lat;
+                checkOutForm.appendChild(latInput);
+
+                const lngInput = document.createElement('input');
+                lngInput.type = 'hidden';
+                lngInput.name = 'longitude';
+                lngInput.value = userLocation.lng;
+                checkOutForm.appendChild(lngInput);
+            }
+        });
+    }
+});
+</script>
+@endsection
 
 @if($employee && $attendance && session('success'))
 <script>

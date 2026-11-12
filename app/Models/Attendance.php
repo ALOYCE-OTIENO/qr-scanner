@@ -20,6 +20,12 @@ class Attendance extends Model
         'check_out_qr_code',
         'status',
         'notes',
+        'check_in_latitude',
+        'check_in_longitude',
+        'check_out_latitude',
+        'check_out_longitude',
+        'check_in_distance',
+        'check_out_distance',
     ];
 
     protected $casts = [
