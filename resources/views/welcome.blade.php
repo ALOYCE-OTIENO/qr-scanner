@@ -298,6 +298,17 @@
             z-index: 1;
         }
 
+        .about-section .section-header {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            margin-bottom: 3rem;
+            border: 2px solid rgba(7, 193, 96, 0.2);
+        }
+
         .features-section > .container {
             position: relative;
             z-index: 1;
@@ -408,13 +419,14 @@
 
         .section-tag {
             display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: var(--primary-light);
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
             border-radius: 50px;
             margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(7, 193, 96, 0.3);
         }
 
         .section-title {
@@ -423,13 +435,15 @@
             margin-bottom: 1rem;
             color: var(--dark);
             letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .section-subtitle {
-            color: var(--gray);
-            font-size: 1.1rem;
+            color: #333;
+            font-size: 1.15rem;
             max-width: 600px;
             margin: 0 auto;
+            font-weight: 500;
         }
 
         .feature-grid {
