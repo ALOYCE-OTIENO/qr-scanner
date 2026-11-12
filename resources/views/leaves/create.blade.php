@@ -38,11 +38,11 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="start_date" class="form-label">Start Date</label>
-                    <input type="date" class="form-control" id="start_date" name="start_date" required onchange="calculateDays()">
+                    <input type="date" class="form-control" id="start_date" name="start_date" required onchange="calculateDays()" min="{{ now()->format('Y-m-d') }}">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="end_date" class="form-label">End Date</label>
-                    <input type="date" class="form-control" id="end_date" name="end_date" required onchange="calculateDays()">
+                    <input type="date" class="form-control" id="end_date" name="end_date" required onchange="calculateDays()" min="{{ now()->format('Y-m-d') }}">
                 </div>
             </div>
 
