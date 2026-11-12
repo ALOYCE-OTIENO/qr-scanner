@@ -183,6 +183,117 @@
             50% { transform: translateY(-20px) rotate(5deg); }
         }
 
+        /* About Section */
+        .about-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        .about-section::after {
+            content: '';
+            position: absolute;
+            bottom: 10%;
+            right: -5%;
+            width: 300px;
+            height: 300px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        .about-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .about-flag {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .flag-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--light-gray);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .flag-item i {
+            font-size: 1.25rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--primary);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-text {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
         /* Features Section */
         .features-section {
             padding: 6rem 0;
@@ -567,6 +678,85 @@
         </div>
     </section>
 
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">About Us</span>
+                <h2 class="section-title">Our Story</h2>
+                <p class="section-subtitle">From China to Africa - Leading the battery technology revolution across continents</p>
+            </div>
+            <div class="row g-4 about-content">
+                <div class="col-lg-6">
+                    <div class="about-card">
+                        <h3 class="fw-bold mb-3" style="font-size: 1.5rem; color: var(--dark);">YUSU POWER MOUNTAIN SOLUTION LIMITED</h3>
+                        <p class="text-muted mb-3" style="line-height: 1.8;">
+                            Founded in China as a pioneer in battery technology, YUSU POWER MOUNTAIN SOLUTION LIMITED has grown into a global leader in energy storage solutions. With decades of expertise in advanced battery manufacturing and innovation, we have expanded our operations to bring cutting-edge technology to emerging markets.
+                        </p>
+                        <p class="text-muted mb-3" style="line-height: 1.8;">
+                            Our African expansion marks a significant milestone in our journey to power sustainable development across the continent. With established branches in Kenya and plans for further expansion, we are committed to delivering world-class battery solutions tailored to the unique needs of African markets.
+                        </p>
+                        <div class="about-flag">
+                            <div class="flag-item">
+                                <i class="bi bi-flag-fill" style="color: #dc143c;"></i>
+                                China (HQ)
+                            </div>
+                            <div class="flag-item">
+                                <i class="bi bi-flag-fill" style="color: #006400;"></i>
+                                Kenya
+                            </div>
+                            <div class="flag-item">
+                                <i class="bi bi-globe"></i>
+                                Africa
+                            </div>
+                        </div>
+                        <h6 class="fw-bold mb-2 mt-4">Our Mission</h6>
+                        <p class="text-muted mb-0" style="line-height: 1.7;">
+                            To provide innovative, sustainable, and reliable battery solutions that power progress and improve lives across Africa and beyond.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-card">
+                        <h3 class="fw-bold mb-4" style="font-size: 1.5rem; color: var(--dark);">Our Journey</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-year">1990s</div>
+                                <div class="timeline-text">
+                                    Founded in China as a small battery manufacturing unit with a vision for innovation and quality.
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-year">2000s</div>
+                                <div class="timeline-text">
+                                    Expanded production capacity and became a leading battery supplier in the Chinese market.
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-year">2010s</div>
+                                <div class="timeline-text">
+                                    Invested in R&D for advanced battery technologies and established international partnerships.
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-year">2020s</div>
+                                <div class="timeline-text">
+                                    Expanded to Africa with Kenya as our first regional hub, bringing advanced battery solutions to the continent.
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-year">Present</div>
+                                <div class="timeline-text">
+                                    Operating across multiple African countries with plans for further expansion, delivering excellence in energy storage.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section class="features-section">
         <div class="container">
@@ -665,20 +855,20 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>Projects Completed</p>
-                </div>
-                <div class="stat-item">
-                    <h3>50+</h3>
+                    <h3>30+</h3>
                     <p>Years Experience</p>
                 </div>
                 <div class="stat-item">
-                    <h3>100%</h3>
-                    <p>Client Satisfaction</p>
+                    <h3>10+</h3>
+                    <p>African Countries</p>
                 </div>
                 <div class="stat-item">
-                    <h3>24/7</h3>
-                    <p>Support Available</p>
+                    <h3>500+</h3>
+                    <p>Employees</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1000+</h3>
+                    <p>Projects Delivered</p>
                 </div>
             </div>
         </div>
