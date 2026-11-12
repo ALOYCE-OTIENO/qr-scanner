@@ -64,16 +64,34 @@ class MessageController extends Controller
             'is_read' => false
         ]);
 
-        // Create notification for the receiver
-        \App\Models\Notification::create([
-            'user_id' => $request->receiver_id,
-            'title' => 'New Message',
-            'message' => Auth::user()->name . ' sent you a message',
-            'type' => 'message',
-            'related_id' => $message->id,
-            'route' => route('messages.show', Auth::id()), // Redirect to conversation with sender
-            'is_read' => false
-        ]);
+        // Check if there's already an unread message notification from this sender
+        $existingNotification = \App\Models\Notification::where('user_id', $request->receiver_id)
+            ->where('type', 'message')
+            ->where('related_id', Auth::id()) // related_id stores the sender's user_id
+            ->where('is_read', false)
+            ->first();
+
+        if ($existingNotification) {
+            // Update existing notification
+            $existingNotification->update([
+                'title' => 'New Message',
+                'message' => Auth::user()->name . ' sent you a message',
+                'related_id' => $message->id,
+                'route' => route('messages.show', Auth::id()),
+                'created_at' => now() // Update timestamp to bring it to top
+            ]);
+        } else {
+            // Create new notification
+            \App\Models\Notification::create([
+                'user_id' => $request->receiver_id,
+                'title' => 'New Message',
+                'message' => Auth::user()->name . ' sent you a message',
+                'type' => 'message',
+                'related_id' => Auth::id(), // Store sender's user_id
+                'route' => route('messages.show', Auth::id()),
+                'is_read' => false
+            ]);
+        }
 
         return back()->with('success', 'Message sent successfully');
     }
