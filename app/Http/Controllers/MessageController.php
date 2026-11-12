@@ -71,7 +71,7 @@ class MessageController extends Controller
             'message' => Auth::user()->name . ' sent you a message',
             'type' => 'message',
             'related_id' => $message->id,
-            'route' => route('messages.show', $request->receiver_id),
+            'route' => route('messages.show', Auth::id()), // Redirect to conversation with sender
             'is_read' => false
         ]);
 

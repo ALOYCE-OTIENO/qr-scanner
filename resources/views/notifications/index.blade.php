@@ -18,7 +18,7 @@
             <div class="list-group">
                 @foreach($notifications as $notification)
                     @if($notification->route)
-                    <a href="{{ $notification->route }}" class="list-group-item list-group-item-action {{ $notification->is_read ? '' : 'bg-light' }}">
+                    <a href="{{ $notification->route }}" class="list-group-item list-group-item-action {{ $notification->is_read ? '' : 'bg-light' }}" onclick="markAsRead({{ $notification->id }})">
                     @else
                     <div class="list-group-item {{ $notification->is_read ? '' : 'bg-light' }}">
                     @endif
@@ -28,7 +28,7 @@
                                 <p class="mb-1">{{ $notification->message }}</p>
                                 <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                             </div>
-                            @if(!$notification->is_read)
+                            @if(!$notification->is_read && !$notification->route)
                                 <form action="{{ route('notifications.mark-read', $notification->id) }}" method="POST" class="ms-2">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-wecom-outline">Mark Read</button>
@@ -51,4 +51,21 @@
         @endif
     </div>
 </div>
+
+<script>
+function markAsRead(notificationId) {
+    fetch('/notifications/' + notificationId + '/mark-read', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({})
+    }).then(response => {
+        // Continue to the link destination
+    }).catch(error => {
+        console.error('Error marking as read:', error);
+    });
+}
+</script>
 @endsection

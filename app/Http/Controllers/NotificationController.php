@@ -26,6 +26,10 @@ class NotificationController extends Controller
 
         $notification->update(['is_read' => true]);
 
+        if (request()->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
+
         return back()->with('success', 'Notification marked as read');
     }
 
