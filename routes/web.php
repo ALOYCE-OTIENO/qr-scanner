@@ -101,6 +101,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [GroupController::class, 'create'])->name('groups.create');
         Route::post('/', [GroupController::class, 'store'])->name('groups.store');
         Route::get('/{id}', [GroupController::class, 'show'])->name('groups.show');
+        Route::post('/{groupId}/send-message', [GroupController::class, 'sendMessage'])->name('groups.send-message');
         Route::post('/{groupId}/add-member', [GroupController::class, 'addMember'])->name('groups.add-member');
     });
 

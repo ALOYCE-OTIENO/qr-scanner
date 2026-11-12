@@ -10,7 +10,7 @@ class Message extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['sender_id', 'receiver_id', 'group_id', 'content', 'type', 'is_read'];
+    protected $fillable = ['sender_id', 'receiver_id', 'group_id', 'content', 'type', 'is_read', 'reply_to_message_id', 'is_private_reply'];
 
     public function sender()
     {
@@ -25,5 +25,15 @@ class Message extends Model
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function replyToMessage()
+    {
+        return $this->belongsTo(Message::class, 'reply_to_message_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Message::class, 'reply_to_message_id');
     }
 }

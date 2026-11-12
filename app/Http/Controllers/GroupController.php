@@ -68,7 +68,7 @@ class GroupController extends Controller
     public function show($id)
     {
         $group = Group::with(['users', 'messages' => function ($query) {
-            $query->with('sender')->orderBy('created_at', 'asc');
+            $query->with('sender', 'replyToMessage')->orderBy('created_at', 'asc');
         }])->findOrFail($id);
 
         // Check if user is a member
@@ -77,6 +77,81 @@ class GroupController extends Controller
         }
 
         return view('groups.show', compact('group'));
+    }
+
+    public function sendMessage(Request $request, $groupId)
+    {
+        $request->validate([
+            'content' => 'required|string|max:1000',
+            'reply_to_message_id' => 'nullable|exists:messages,id',
+            'is_private_reply' => 'nullable|boolean'
+        ]);
+
+        $group = Group::findOrFail($groupId);
+
+        // Check if user is a member
+        if (!$group->users->contains(Auth::id())) {
+            return back()->with('error', 'You are not a member of this group');
+        }
+
+        // Check if it's a private reply
+        $isPrivateReply = $request->is_private_reply ?? false;
+        $replyToMessageId = $request->reply_to_message_id;
+
+        if ($isPrivateReply && $replyToMessageId) {
+            // Private reply - send to the original sender only
+            $originalMessage = \App\Models\Message::findOrFail($replyToMessageId);
+            
+            \App\Models\Message::create([
+                'sender_id' => Auth::id(),
+                'receiver_id' => $originalMessage->sender_id,
+                'group_id' => $groupId,
+                'content' => $request->content,
+                'type' => 'text',
+                'reply_to_message_id' => $replyToMessageId,
+                'is_private_reply' => true,
+                'is_read' => false
+            ]);
+
+            // Notify the recipient
+            \App\Models\Notification::create([
+                'user_id' => $originalMessage->sender_id,
+                'title' => 'Private Reply',
+                'message' => Auth::user()->name . " replied privately to your message in group: {$group->name}",
+                'type' => 'message',
+                'related_id' => Auth::id(),
+                'route' => route('messages.show', Auth::id()),
+                'is_read' => false
+            ]);
+        } else {
+            // Regular group message
+            \App\Models\Message::create([
+                'sender_id' => Auth::id(),
+                'group_id' => $groupId,
+                'content' => $request->content,
+                'type' => 'text',
+                'reply_to_message_id' => $replyToMessageId,
+                'is_private_reply' => false,
+                'is_read' => false
+            ]);
+
+            // Notify all group members except sender
+            foreach ($group->users as $member) {
+                if ($member->id !== Auth::id()) {
+                    \App\Models\Notification::create([
+                        'user_id' => $member->id,
+                        'title' => 'New Group Message',
+                        'message' => Auth::user()->name . " sent a message in group: {$group->name}",
+                        'type' => 'message',
+                        'related_id' => Auth::id(),
+                        'route' => route('groups.show', $groupId),
+                        'is_read' => false
+                    ]);
+                }
+            }
+        }
+
+        return back()->with('success', 'Message sent successfully');
     }
 
     public function addMember(Request $request, $groupId)
