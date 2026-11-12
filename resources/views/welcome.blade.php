@@ -123,6 +123,7 @@
             border-bottom: 1px solid #e5e5e5;
             padding: 1rem 0;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
         }
 
         .navbar-brand {
@@ -783,7 +784,7 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="bi bi-battery-charging"></i>
