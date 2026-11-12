@@ -10,6 +10,16 @@
     </a>
 </div>
 
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <div class="card">
     <div class="card-body">
         <form action="{{ route('leaves.store') }}" method="POST">
@@ -28,17 +38,18 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="start_date" class="form-label">Start Date</label>
-                    <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    <input type="date" class="form-control" id="start_date" name="start_date" required onchange="calculateDays()">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="end_date" class="form-label">End Date</label>
-                    <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    <input type="date" class="form-control" id="end_date" name="end_date" required onchange="calculateDays()">
                 </div>
             </div>
 
             <div class="mb-3">
                 <label for="days" class="form-label">Number of Days</label>
-                <input type="number" class="form-control" id="days" name="days" required min="1" value="1">
+                <input type="number" class="form-control" id="days" name="days" required min="1" value="1" readonly>
+                <small class="text-muted">Automatically calculated based on date range</small>
             </div>
 
             <div class="mb-3">
@@ -52,4 +63,19 @@
         </form>
     </div>
 </div>
+
+<script>
+function calculateDays() {
+    const startDate = document.getElementById('start_date').value;
+    const endDate = document.getElementById('end_date').value;
+    
+    if (startDate && endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const diffTime = Math.abs(end - start);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        document.getElementById('days').value = diffDays;
+    }
+}
+</script>
 @endsection

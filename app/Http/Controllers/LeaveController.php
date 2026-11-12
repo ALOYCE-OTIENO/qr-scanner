@@ -33,18 +33,22 @@ class LeaveController extends Controller
     {
         $request->validate([
             'leave_type' => 'required|in:personal,sick,annual,adjustment',
-            'start_date' => 'required|date|after_or_equal:today',
+            'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'days' => 'required|integer|min:1',
             'reason' => 'required|string|max:1000',
         ]);
+
+        // Calculate days automatically
+        $startDate = Carbon::parse($request->start_date);
+        $endDate = Carbon::parse($request->end_date);
+        $days = $startDate->diffInDays($endDate) + 1;
 
         $leave = Leave::create([
             'user_id' => Auth::id(),
             'leave_type' => $request->leave_type,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'days' => $request->days,
+            'days' => $days,
             'reason' => $request->reason,
             'status' => 'pending',
         ]);
