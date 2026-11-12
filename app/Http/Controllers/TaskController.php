@@ -43,7 +43,7 @@ class TaskController extends Controller
             'due_date' => 'nullable|date|after:today'
         ]);
 
-        Task::create([
+        $task = Task::create([
             'creator_id' => Auth::id(),
             'assignee_id' => $request->assignee_id,
             'title' => $request->title,
