@@ -28,9 +28,19 @@
                                 <div style="width: 8px; height: 8px; background: var(--wecom-green); border-radius: 50%; margin-top: 8px; margin-right: 12px; flex-shrink: 0;"></div>
                                 @endif
                                 <div>
-                                    <h6 class="mb-1" style="font-weight: 600;">{{ $notification->title }}</h6>
+                                    <h6 class="mb-1" style="font-weight: 600;">
+                                        {{ $notification->title }}
+                                        @if(isset($notification->is_merged) && $notification->is_merged)
+                                        <span class="badge bg-secondary ms-2">{{ $notification->count }} messages</span>
+                                        @endif
+                                    </h6>
                                     <p class="mb-1">{{ $notification->message }}</p>
-                                    <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                    <small class="text-muted">
+                                        {{ $notification->created_at->diffForHumans() }}
+                                        @if(isset($notification->is_merged) && $notification->is_merged)
+                                        • {{ $notification->count }} read messages
+                                        @endif
+                                    </small>
                                 </div>
                             </div>
                             @if(!$notification->is_read && !$notification->route)
