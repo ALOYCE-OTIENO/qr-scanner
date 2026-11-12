@@ -370,11 +370,11 @@
 
         .footer-link {
             color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
             transition: 0.3s;
             font-size: 0.95rem;
             display: block;
             margin-bottom: 0.75rem;
+            cursor: pointer;
         }
 
         .footer-link:hover {
@@ -433,6 +433,78 @@
             .stat-item h3 {
                 font-size: 2.5rem;
             }
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #e5e5e5;
+            padding: 1.5rem 2rem;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-detail-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .feature-detail-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .feature-detail-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .btn-close-modal {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close-modal:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -504,86 +576,86 @@
                 <p class="section-subtitle">A complete solution for attendance tracking, job management, and team collaboration</p>
             </div>
             <div class="feature-grid">
-                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="bi bi-qr-code-scan"></i>
                     </div>
                     <h3>QR Attendance</h3>
                     <p>Scan QR codes to check in/out with timestamps. Track attendance patterns and status with ease.</p>
-                    <span class="feature-link">
+                    <a href="#" class="feature-link" data-bs-toggle="modal" data-bs-target="#qrAttendanceModal">
                         Learn More <i class="bi bi-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    </a>
+                </div>
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="bi bi-graph-up"></i>
                     </div>
                     <h3>Job Tracking</h3>
                     <p>Record and monitor job outputs. Track productivity metrics and performance data in real-time.</p>
-                    <span class="feature-link">
+                    <a href="#" class="feature-link" data-bs-toggle="modal" data-bs-target="#jobTrackingModal">
                         Learn More <i class="bi bi-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    </a>
+                </div>
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="bi bi-chat-dots"></i>
                     </div>
                     <h3>Team Messaging</h3>
                     <p>Real-time chat with teammates. Send messages, share files, and collaborate securely.</p>
-                    <span class="feature-link">
+                    <a href="#" class="feature-link" data-bs-toggle="modal" data-bs-target="#teamMessagingModal">
                         Learn More <i class="bi bi-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    </a>
+                </div>
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="bi bi-people-fill"></i>
                     </div>
                     <h3>Work Groups</h3>
                     <p>Create team groups for collaboration. Share announcements and coordinate work efficiently.</p>
-                    <span class="feature-link">
+                    <a href="#" class="feature-link" data-bs-toggle="modal" data-bs-target="#workGroupsModal">
                         Learn More <i class="bi bi-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    </a>
+                </div>
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="bi bi-calendar-check"></i>
                     </div>
                     <h3>Leave Management</h3>
                     <p>Apply for leave requests including personal, sick, annual, and adjustment leaves with approval workflow.</p>
-                    <span class="feature-link">
+                    <a href="#" class="feature-link" data-bs-toggle="modal" data-bs-target="#leaveManagementModal">
                         Learn More <i class="bi bi-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    </a>
+                </div>
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="bi bi-list-check"></i>
                     </div>
                     <h3>Task Management</h3>
                     <p>Assign and track tasks with priorities and due dates. Monitor progress and productivity.</p>
-                    <span class="feature-link">
+                    <a href="#" class="feature-link" data-bs-toggle="modal" data-bs-target="#taskManagementModal">
                         Learn More <i class="bi bi-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    </a>
+                </div>
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="bi bi-calendar-event"></i>
                     </div>
                     <h3>Meeting Scheduling</h3>
                     <p>Schedule meetings and video calls. Invite participants and share details effortlessly.</p>
-                    <span class="feature-link">
+                    <a href="#" class="feature-link" data-bs-toggle="modal" data-bs-target="#meetingSchedulingModal">
                         Learn More <i class="bi bi-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    </a>
+                </div>
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="bi bi-check-circle"></i>
                     </div>
                     <h3>Approvals</h3>
                     <p>Submit and review approval requests. Streamline decision-making processes.</p>
-                    <span class="feature-link">
+                    <a href="#" class="feature-link" data-bs-toggle="modal" data-bs-target="#approvalsModal">
                         Learn More <i class="bi bi-arrow-right"></i>
-                    </span>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -641,17 +713,17 @@
                 </div>
                 <div class="col-lg-2 mb-4">
                     <h5>Quick Links</h5>
-                    <a href="#" class="footer-link">Home</a>
-                    <a href="#" class="footer-link">About Us</a>
-                    <a href="#" class="footer-link">Services</a>
-                    <a href="#" class="footer-link">Contact</a>
+                    <span class="footer-link">Home</span>
+                    <span class="footer-link">About Us</span>
+                    <span class="footer-link">Services</span>
+                    <span class="footer-link">Contact</span>
                 </div>
                 <div class="col-lg-2 mb-4">
                     <h5>Features</h5>
-                    <a href="#" class="footer-link">Attendance</a>
-                    <a href="#" class="footer-link">Messaging</a>
-                    <a href="#" class="footer-link">Tasks</a>
-                    <a href="#" class="footer-link">Reports</a>
+                    <span class="footer-link" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#qrAttendanceModal">Attendance</span>
+                    <span class="footer-link" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#teamMessagingModal">Messaging</span>
+                    <span class="footer-link" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#taskManagementModal">Tasks</span>
+                    <span class="footer-link" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#jobTrackingModal">Reports</span>
                 </div>
                 <div class="col-lg-4 mb-4">
                     <h5>Connect With Us</h5>
@@ -674,5 +746,299 @@
             </div>
         </div>
     </footer>
+
+    <!-- Feature Modals -->
+    <!-- QR Attendance Modal -->
+    <div class="modal fade" id="qrAttendanceModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">QR Attendance System</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="bi bi-qr-code-scan"></i>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Our QR Attendance system allows employees to check in and out by scanning a QR code at the company gate, providing an efficient and contactless way to track attendance.
+                    </p>
+                    <h6 class="fw-bold mb-2">Key Features:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Browser-based QR scanning - no app required</li>
+                        <li>Automatic timestamp recording for check-in/out</li>
+                        <li>Real-time attendance status tracking</li>
+                        <li>Attendance history and reports</li>
+                        <li>Geo-location verification (optional)</li>
+                        <li>Admin dashboard for monitoring</li>
+                    </ul>
+                    <h6 class="fw-bold mb-2">How It Works:</h6>
+                    <p class="text-muted">
+                        A unique QR code is displayed at the company entrance. Employees scan it using their smartphone camera or the built-in browser scanner to log their attendance. The system automatically records the time and date, making attendance tracking seamless and accurate.
+                    </p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Tracking Modal -->
+    <div class="modal fade" id="jobTrackingModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Job Tracking System</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Track and monitor job outputs with our comprehensive job tracking system. Monitor productivity, analyze performance metrics, and make data-driven decisions.
+                    </p>
+                    <h6 class="fw-bold mb-2">Key Features:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Record daily job outputs and tasks completed</li>
+                        <li>Track productivity metrics and KPIs</li>
+                        <li>Generate performance reports</li>
+                        <li>Compare individual and team performance</li>
+                        <li>Visual charts and analytics</li>
+                        <li>Export data for further analysis</li>
+                    </ul>
+                    <h6 class="fw-bold mb-2">Benefits:</h6>
+                    <p class="text-muted">
+                        Managers can easily track employee productivity, identify top performers, and address areas needing improvement. Employees can monitor their own progress and set productivity goals.
+                    </p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Messaging Modal -->
+    <div class="modal fade" id="teamMessagingModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Team Messaging</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="bi bi-chat-dots"></i>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Communicate seamlessly with your team through our real-time messaging system. Send messages, share files, and collaborate efficiently.
+                    </p>
+                    <h6 class="fw-bold mb-2">Key Features:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Real-time direct messaging</li>
+                        <li>Group messaging for team collaboration</li>
+                        <li>File sharing and attachments</li>
+                        <li>Message history and search</li>
+                        <li>Read receipts and status indicators</li>
+                        <li>Private replies in group chats</li>
+                    </ul>
+                    <h6 class="fw-bold mb-2">How It Works:</h6>
+                    <p class="text-muted">
+                        Start a conversation with any colleague or create group chats for projects. Send text messages, share documents, and collaborate in real-time. Messages are organized by conversation for easy reference.
+                    </p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Work Groups Modal -->
+    <div class="modal fade" id="workGroupsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Work Groups</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Create and manage work groups for better team coordination. Share announcements, coordinate projects, and keep everyone aligned.
+                    </p>
+                    <h6 class="fw-bold mb-2">Key Features:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Create unlimited work groups</li>
+                        <li>Add/remove group members</li>
+                        <li>Group messaging and discussions</li>
+                        <li>Announcement groups for company-wide updates</li>
+                        <li>Group admin controls</li>
+                        <li>Member notifications</li>
+                    </ul>
+                    <h6 class="fw-bold mb-2">Use Cases:</h6>
+                    <p class="text-muted">
+                        Create groups for departments, projects, or teams. Use announcement groups for company-wide communications. Group members can collaborate through messaging and stay updated on relevant discussions.
+                    </p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leave Management Modal -->
+    <div class="modal fade" id="leaveManagementModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Leave Management</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Streamline your leave management process with our comprehensive system. Apply for various types of leave and track approval status.
+                    </p>
+                    <h6 class="fw-bold mb-2">Leave Types:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Personal leave - for personal matters</li>
+                        <li>Sick leave - for health-related absences</li>
+                        <li>Annual leave - for vacation and holidays</li>
+                        <li>Adjustment leave - for schedule adjustments</li>
+                    </ul>
+                    <h6 class="fw-bold mb-2">Key Features:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Automatic leave days calculation</li>
+                        <li>Date validation (prevents past dates)</li>
+                        <li>Approval workflow with notifications</li>
+                        <li>Leave balance tracking</li>
+                        <li>Leave history and reports</li>
+                        <li>Admin approval dashboard</li>
+                    </ul>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Management Modal -->
+    <div class="modal fade" id="taskManagementModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Task Management</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="bi bi-list-check"></i>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Assign, track, and manage tasks efficiently. Keep your team organized and ensure deadlines are met with our task management system.
+                    </p>
+                    <h6 class="fw-bold mb-2">Key Features:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Create and assign tasks to team members</li>
+                        <li>Set task priorities (low, medium, high, urgent)</li>
+                        <li>Define due dates and deadlines</li>
+                        <li>Track task status (pending, in progress, completed)</li>
+                        <li>Task descriptions and details</li>
+                        <li>Notifications for task assignments</li>
+                    </ul>
+                    <h6 class="fw-bold mb-2">Benefits:</h6>
+                    <p class="text-muted">
+                        Managers can delegate tasks effectively and monitor progress. Team members receive clear assignments with priorities and deadlines. The system ensures accountability and transparency in task completion.
+                    </p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meeting Scheduling Modal -->
+    <div class="modal fade" id="meetingSchedulingModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Meeting Scheduling</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="bi bi-calendar-event"></i>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Schedule and manage meetings effortlessly. Invite participants, set agendas, and keep everyone informed about upcoming meetings.
+                    </p>
+                    <h6 class="fw-bold mb-2">Key Features:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Schedule meetings with date and time</li>
+                        <li>Invite multiple participants</li>
+                        <li>Meeting types: regular, video call, training</li>
+                        <li>Meeting location and description</li>
+                        <li>Participant notifications</li>
+                        <li>Meeting history and calendar view</li>
+                    </ul>
+                    <h6 class="fw-bold mb-2">How It Works:</h6>
+                    <p class="text-muted">
+                        Create a meeting, select the date and time, add location details, and invite participants. The system automatically sends notifications to all invitees. Participants can view meeting details and prepare accordingly.
+                    </p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Approvals Modal -->
+    <div class="modal fade" id="approvalsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Approvals System</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Streamline decision-making processes with our approvals system. Submit requests for approval and track their status in real-time.
+                    </p>
+                    <h6 class="fw-bold mb-2">Key Features:</h6>
+                    <ul class="feature-detail-list">
+                        <li>Submit approval requests</li>
+                        <li>Assign approvers for each request</li>
+                        <li>Track approval status (pending, approved, rejected)</li>
+                        <li>Add request details and descriptions</li>
+                        <li>Notifications for approvers and requesters</li>
+                        <li>Approval history and reports</li>
+                    </ul>
+                    <h6 class="fw-bold mb-2">Use Cases:</h6>
+                    <p class="text-muted">
+                        Use for expense approvals, project authorizations, resource requests, or any process requiring management approval. The system ensures transparency and keeps all stakeholders informed throughout the approval process.
+                    </p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
