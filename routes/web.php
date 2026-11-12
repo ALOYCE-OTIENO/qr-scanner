@@ -14,6 +14,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\LeaveController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -143,5 +144,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [MeetingController::class, 'create'])->name('meetings.create');
         Route::post('/', [MeetingController::class, 'store'])->name('meetings.store');
         Route::get('/{id}', [MeetingController::class, 'show'])->name('meetings.show');
+    });
+
+    // Leaves
+    Route::prefix('leaves')->group(function () {
+        Route::get('/', [LeaveController::class, 'index'])->name('leaves.index');
+        Route::get('/create', [LeaveController::class, 'create'])->name('leaves.create');
+        Route::post('/', [LeaveController::class, 'store'])->name('leaves.store');
+        Route::get('/{id}', [LeaveController::class, 'show'])->name('leaves.show');
+        Route::post('/{id}/approve', [LeaveController::class, 'approve'])->name('leaves.approve');
+        Route::post('/{id}/reject', [LeaveController::class, 'reject'])->name('leaves.reject');
     });
 });

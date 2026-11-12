@@ -81,4 +81,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Meeting::class, 'meeting_user')->withTimestamps();
     }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
 }
