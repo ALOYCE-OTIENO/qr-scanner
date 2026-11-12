@@ -307,25 +307,29 @@
             background: white;
             border-radius: 20px;
             padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             height: 100%;
+            border: 2px solid rgba(7, 193, 96, 0.2);
         }
 
         .about-flag {
             display: flex;
             gap: 1rem;
             margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
 
         .flag-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--light-gray);
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-light) 0%, rgba(7, 193, 96, 0.1) 100%);
             border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 1px solid var(--primary);
+            color: var(--primary);
         }
 
         .flag-item i {
@@ -368,13 +372,14 @@
         .timeline-year {
             font-weight: 700;
             color: var(--primary);
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
         }
 
         .timeline-text {
-            color: var(--gray);
-            line-height: 1.7;
+            color: #333;
+            line-height: 1.8;
+            font-size: 1rem;
         }
 
         /* Features Section */
@@ -863,10 +868,10 @@
                 <div class="col-lg-6">
                     <div class="about-card">
                         <h3 class="fw-bold mb-3" style="font-size: 1.5rem; color: var(--dark);">YUSU POWER MOUNTAIN SOLUTION LIMITED</h3>
-                        <p class="text-muted mb-3" style="line-height: 1.8;">
+                        <p class="mb-3" style="line-height: 1.8; color: #333; font-size: 1.05rem;">
                             Founded in China as a pioneer in battery technology, YUSU POWER MOUNTAIN SOLUTION LIMITED has grown into a global leader in energy storage solutions. With decades of expertise in advanced battery manufacturing and innovation, we have expanded our operations to bring cutting-edge technology to emerging markets.
                         </p>
-                        <p class="text-muted mb-3" style="line-height: 1.8;">
+                        <p class="mb-3" style="line-height: 1.8; color: #333; font-size: 1.05rem;">
                             Our African expansion marks a significant milestone in our journey to power sustainable development across the continent. With established branches in Kenya and plans for further expansion, we are committed to delivering world-class battery solutions tailored to the unique needs of African markets.
                         </p>
                         <div class="about-flag">
@@ -883,8 +888,8 @@
                                 Africa
                             </div>
                         </div>
-                        <h6 class="fw-bold mb-2 mt-4">Our Mission</h6>
-                        <p class="text-muted mb-0" style="line-height: 1.7;">
+                        <h6 class="fw-bold mb-2 mt-4" style="color: var(--primary); font-size: 1.1rem;">Our Mission</h6>
+                        <p class="mb-0" style="line-height: 1.7; color: #333; font-size: 1.05rem;">
                             To provide innovative, sustainable, and reliable battery solutions that power progress and improve lives across Africa and beyond.
                         </p>
                     </div>
