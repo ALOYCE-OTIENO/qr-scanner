@@ -37,60 +37,85 @@ class NotificationController extends Controller
                     $groupedNotifications[$key]['unread'][] = $notification;
                 }
             } else {
-                $otherNotifications[] = $notification;
+                if ($notification->is_read) {
+                    $otherNotifications['read'][] = $notification;
+                } else {
+                    $otherNotifications['unread'][] = $notification;
+                }
             }
         }
 
-        // Build final list
-        $finalNotifications = collect();
+        // Build final lists separated by read status
+        $unreadNotifications = collect();
+        $readNotifications = collect();
 
-        // Add unread message notifications first
+        // Add unread message notifications
         foreach ($groupedNotifications as $group) {
             foreach ($group['unread'] as $unread) {
-                // Fix the route to use the correct URL
                 if ($unread->route) {
                     $unread->route = str_replace('http://localhost', 'http://127.0.0.1:8000', $unread->route);
                 }
-                $finalNotifications->push($unread);
+                $unreadNotifications->push($unread);
             }
         }
 
-        // Add other notifications (leaves, system, etc.)
-        foreach ($otherNotifications as $other) {
-            // Fix the route to use the correct URL
-            if ($other->route) {
-                $other->route = str_replace('http://localhost', 'http://127.0.0.1:8000', $other->route);
+        // Add unread other notifications
+        if (isset($otherNotifications['unread'])) {
+            foreach ($otherNotifications['unread'] as $unread) {
+                if ($unread->route) {
+                    $unread->route = str_replace('http://localhost', 'http://127.0.0.1:8000', $unread->route);
+                }
+                $unreadNotifications->push($unread);
             }
-            $finalNotifications->push($other);
         }
 
         // Add merged read message notifications
         foreach ($groupedNotifications as $group) {
             if (!empty($group['read'])) {
-                // Use the most recent read notification as the representative
                 $mostRecent = $group['read'][0];
                 $mostRecent->is_merged = true;
                 $mostRecent->merged_count = count($group['read']);
-                // Fix the route to use the correct URL
                 if ($mostRecent->route) {
                     $mostRecent->route = str_replace('http://localhost', 'http://127.0.0.1:8000', $mostRecent->route);
                 }
-                $finalNotifications->push($mostRecent);
+                $readNotifications->push($mostRecent);
+            }
+        }
+
+        // Add read other notifications
+        if (isset($otherNotifications['read'])) {
+            foreach ($otherNotifications['read'] as $read) {
+                if ($read->route) {
+                    $read->route = str_replace('http://localhost', 'http://127.0.0.1:8000', $read->route);
+                }
+                $readNotifications->push($read);
             }
         }
 
         // Paginate
         $page = request()->get('page', 1);
         $perPage = 20;
-        $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
-            $finalNotifications->forPage($page, $perPage),
-            $finalNotifications->count(),
+        
+        $paginatedUnread = new \Illuminate\Pagination\LengthAwarePaginator(
+            $unreadNotifications->forPage($page, $perPage),
+            $unreadNotifications->count(),
             $perPage,
             $page,
             ['path' => request()->url(), 'query' => request()->query()]
         );
 
-        return view('notifications.index', ['notifications' => $paginated]);
+        $paginatedRead = new \Illuminate\Pagination\LengthAwarePaginator(
+            $readNotifications->forPage($page, $perPage),
+            $readNotifications->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('notifications.index', [
+            'unreadNotifications' => $paginatedUnread,
+            'readNotifications' => $paginatedRead
+        ]);
     }
 
     public function markAsRead($id)
