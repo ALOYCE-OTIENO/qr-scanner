@@ -60,42 +60,69 @@
 </div>
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0 text-muted">
             <i class="bi bi-check2-circle me-2"></i>Read Notifications ({{ $readNotifications->count() }})
         </h5>
+        @if($readNotifications->count() > 0)
+        <form method="POST" action="{{ route('notifications.clear-read') }}" onsubmit="return confirm('Clear all read notifications?');">
+            @csrf
+            <button type="submit" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash me-1"></i>Clear All
+            </button>
+        </form>
+        @endif
     </div>
     <div class="card-body">
         @if($readNotifications->count() > 0)
             <div class="list-group">
                 @foreach($readNotifications as $notification)
                     @if($notification->route)
-                    <a href="{{ $notification->route }}" class="list-group-item list-group-item-action">
-                    @else
-                    <div class="list-group-item">
-                    @endif
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="d-flex align-items-start">
-                                <div>
-                                    <h6 class="mb-1" style="font-weight: 600;">
-                                        {{ $notification->title }}
-                                        @if(isset($notification->is_merged) && $notification->is_merged)
-                                        <span class="badge bg-secondary ms-2">{{ $notification->merged_count }} messages</span>
-                                        @endif
-                                    </h6>
-                                    <p class="mb-1 text-muted">{{ $notification->message }}</p>
-                                    <small class="text-muted">
-                                        {{ $notification->created_at->diffForHumans() }}
-                                        @if(isset($notification->is_merged) && $notification->is_merged)
-                                        • {{ $notification->merged_count }} read messages
-                                        @endif
-                                    </small>
-                                </div>
+                    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-start flex-grow-1">
+                            <div>
+                                <h6 class="mb-1" style="font-weight: 600;">
+                                    {{ $notification->title }}
+                                    @if(isset($notification->is_merged) && $notification->is_merged)
+                                    <span class="badge bg-secondary ms-2">{{ $notification->merged_count }} messages</span>
+                                    @endif
+                                </h6>
+                                <p class="mb-1 text-muted">{{ $notification->message }}</p>
+                                <small class="text-muted">
+                                    {{ $notification->created_at->diffForHumans() }}
+                                    @if(isset($notification->is_merged) && $notification->is_merged)
+                                    • {{ $notification->merged_count }} read messages
+                                    @endif
+                                </small>
                             </div>
                         </div>
-                    @if($notification->route)
-                    </a>
+                        <a href="{{ $notification->route }}" class="btn btn-sm btn-wecom-outline me-2">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}" onsubmit="return confirm('Delete this notification?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </div>
                     @else
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-start flex-grow-1">
+                            <div>
+                                <h6 class="mb-1" style="font-weight: 600;">{{ $notification->title }}</h6>
+                                <p class="mb-1 text-muted">{{ $notification->message }}</p>
+                                <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                            </div>
+                        </div>
+                        <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}" onsubmit="return confirm('Delete this notification?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
                     </div>
                     @endif
                 @endforeach

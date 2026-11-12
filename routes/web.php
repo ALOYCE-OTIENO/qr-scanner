@@ -110,6 +110,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [NotificationController::class, 'index'])->name('notifications.index');
         Route::post('/{id}/mark-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
         Route::post('/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+        Route::delete('/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+        Route::post('/clear-read', [NotificationController::class, 'clearRead'])->name('notifications.clear-read');
         Route::get('/create', [NotificationController::class, 'create'])->name('notifications.create')->middleware('admin');
         Route::post('/', [NotificationController::class, 'store'])->name('notifications.store')->middleware('admin');
     });
