@@ -15,20 +15,17 @@ class NotificationController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // Group notifications for display
+        // Group message notifications by sender
         $groupedNotifications = [];
-        $processedSenders = [];
+        $otherNotifications = [];
 
         foreach ($notifications as $notification) {
             if ($notification->type === 'message') {
-                // For message notifications, group by sender (related_id)
                 $senderId = $notification->related_id;
                 $key = 'message_' . $senderId;
 
                 if (!isset($groupedNotifications[$key])) {
                     $groupedNotifications[$key] = [
-                        'type' => 'message',
-                        'sender_id' => $senderId,
                         'unread' => [],
                         'read' => []
                     ];
@@ -40,36 +37,37 @@ class NotificationController extends Controller
                     $groupedNotifications[$key]['unread'][] = $notification;
                 }
             } else {
-                // Non-message notifications stay separate
-                $groupedNotifications[] = $notification;
+                $otherNotifications[] = $notification;
             }
         }
 
-        // Flatten the grouped notifications for display
+        // Build final list
         $finalNotifications = collect();
 
-        foreach ($groupedNotifications as $item) {
-            if (is_array($item) && isset($item['type']) && $item['type'] === 'message') {
-                // Show unread notifications first (if any)
-                if (!empty($item['unread'])) {
-                    foreach ($item['unread'] as $unread) {
-                        $finalNotifications->push($unread);
-                    }
-                }
-                // Then show merged read notification (if any)
-                if (!empty($item['read'])) {
-                    // Merge read notifications into one
-                    $merged = $item['read'][0];
-                    $merged->is_merged = true;
-                    $merged->count = count($item['read']);
-                    $finalNotifications->push($merged);
-                }
-            } else {
-                $finalNotifications->push($item);
+        // Add unread message notifications first
+        foreach ($groupedNotifications as $group) {
+            foreach ($group['unread'] as $unread) {
+                $finalNotifications->push($unread);
             }
         }
 
-        // Paginate the final collection
+        // Add other notifications (leaves, system, etc.)
+        foreach ($otherNotifications as $other) {
+            $finalNotifications->push($other);
+        }
+
+        // Add merged read message notifications
+        foreach ($groupedNotifications as $group) {
+            if (!empty($group['read'])) {
+                // Use the most recent read notification as the representative
+                $mostRecent = $group['read'][0];
+                $mostRecent->is_merged = true;
+                $mostRecent->merged_count = count($group['read']);
+                $finalNotifications->push($mostRecent);
+            }
+        }
+
+        // Paginate
         $page = request()->get('page', 1);
         $perPage = 20;
         $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
@@ -90,21 +88,6 @@ class NotificationController extends Controller
             ->firstOrFail();
 
         $notification->update(['is_read' => true]);
-
-        // If this is a message notification, check if there are other read notifications from the same sender
-        // If yes, delete this one to merge with them
-        if ($notification->type === 'message') {
-            $otherReadNotifications = Notification::where('user_id', Auth::id())
-                ->where('type', 'message')
-                ->where('related_id', $notification->related_id)
-                ->where('is_read', true)
-                ->where('id', '!=', $notification->id)
-                ->exists();
-
-            if ($otherReadNotifications) {
-                $notification->delete();
-            }
-        }
 
         if (request()->expectsJson()) {
             return response()->json(['success' => true]);
