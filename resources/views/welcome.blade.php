@@ -37,9 +37,11 @@
             background-size: 200% 100%;
             animation: gradientMove 8s ease infinite;
             color: white;
-            padding: 0.6rem 0;
+            padding: 1rem 0;
             overflow: hidden;
             position: relative;
+            box-shadow: 0 4px 20px rgba(7, 193, 96, 0.3);
+            z-index: 1000;
         }
 
         @keyframes gradientMove {
@@ -52,35 +54,57 @@
             display: flex;
             align-items: center;
             overflow: hidden;
+            width: 100%;
         }
 
         .marquee-content {
             display: flex;
-            animation: scroll 30s linear infinite;
+            animation: scroll 25s linear infinite;
             white-space: nowrap;
+            will-change: transform;
         }
 
         .marquee-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             padding: 0 3rem;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 500;
+            border-right: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .marquee-item:last-child {
+            border-right: none;
         }
 
         .marquee-item i {
-            font-size: 1.25rem;
-            opacity: 0.9;
+            font-size: 1.4rem;
+            opacity: 1;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        .marquee-item:nth-child(2) i { animation-delay: 0.2s; }
+        .marquee-item:nth-child(3) i { animation-delay: 0.4s; }
+        .marquee-item:nth-child(4) i { animation-delay: 0.6s; }
+        .marquee-item:nth-child(5) i { animation-delay: 0.8s; }
+        .marquee-item:nth-child(6) i { animation-delay: 1s; }
+        .marquee-item:nth-child(7) i { animation-delay: 1.2s; }
+        .marquee-item:nth-child(8) i { animation-delay: 1.4s; }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
         .marquee-item span {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .marquee-item strong {
             color: white;
             font-weight: 700;
+            font-size: 1.1rem;
         }
 
         @keyframes scroll {
