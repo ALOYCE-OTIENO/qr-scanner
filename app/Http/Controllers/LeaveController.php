@@ -49,6 +49,18 @@ class LeaveController extends Controller
             'status' => 'pending',
         ]);
 
+        // Notify all admins about the new leave request
+        $admins = \App\Models\User::where('is_admin', true)->get();
+        foreach ($admins as $admin) {
+            \App\Models\Notification::create([
+                'user_id' => $admin->id,
+                'title' => 'New Leave Request',
+                'message' => Auth::user()->name . " has applied for " . ucfirst($request->leave_type) . " leave",
+                'type' => 'system',
+                'is_read' => false
+            ]);
+        }
+
         return redirect()->route('leaves.index')->with('success', 'Leave request submitted successfully');
     }
 
@@ -66,6 +78,15 @@ class LeaveController extends Controller
             'admin_comment' => 'Approved by ' . Auth::user()->name
         ]);
 
+        // Notify the employee that their leave was approved
+        \App\Models\Notification::create([
+            'user_id' => $leave->user_id,
+            'title' => 'Leave Approved',
+            'message' => "Your " . ucfirst($leave->leave_type) . " leave request has been approved",
+            'type' => 'system',
+            'is_read' => false
+        ]);
+
         return redirect()->route('leaves.index')->with('success', 'Leave request approved');
     }
 
@@ -79,6 +100,15 @@ class LeaveController extends Controller
         $leave->update([
             'status' => 'rejected',
             'admin_comment' => $request->admin_comment
+        ]);
+
+        // Notify the employee that their leave was rejected
+        \App\Models\Notification::create([
+            'user_id' => $leave->user_id,
+            'title' => 'Leave Rejected',
+            'message' => "Your " . ucfirst($leave->leave_type) . " leave request has been rejected: " . $request->admin_comment,
+            'type' => 'system',
+            'is_read' => false
         ]);
 
         return redirect()->route('leaves.index')->with('success', 'Leave request rejected');
