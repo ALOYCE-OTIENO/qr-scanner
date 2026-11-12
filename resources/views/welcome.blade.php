@@ -267,6 +267,93 @@
             color: var(--wecom-gray);
         }
 
+        /* Marquee Styles */
+        .marquee-container {
+            background: linear-gradient(90deg, var(--wecom-green) 0%, var(--wecom-green-hover) 100%);
+            color: white;
+            padding: 0.75rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker-marquee {
+            background: #fff;
+            border: 2px solid var(--wecom-green);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: ticker 30s linear infinite;
+        }
+
+        .ticker-item {
+            flex-shrink: 0;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .ticker-icon {
+            color: var(--wecom-green);
+            font-size: 1.25rem;
+        }
+
+        .feature-marquee {
+            background: linear-gradient(135deg, var(--wecom-green-light) 0%, #fff 100%);
+            border: 1px solid var(--wecom-green);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            margin-right: 1rem;
+            background: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--wecom-green);
+            font-weight: 500;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .footer-link {
             color: var(--wecom-gray);
             text-decoration: none;
@@ -319,6 +406,47 @@
             </div>
         </div>
     </nav>
+
+    <!-- Top Marquee Banner -->
+    <div class="marquee-container">
+        <div class="marquee-text">
+            🎉 Welcome to YUSU POWER MOUNTAIN SOLUTION LIMITED • Leading Battery Technology Solutions • QR Attendance & Job Tracking System • WeCom-Style Collaboration Platform •
+        </div>
+    </div>
+
+    <!-- Feature Marquee -->
+    <div class="container mt-4">
+        <div class="feature-marquee">
+            <span class="feature-marquee-item"><i class="bi bi-qr-code-scan"></i> QR Attendance</span>
+            <span class="feature-marquee-item"><i class="bi bi-people"></i> Job Tracking</span>
+            <span class="feature-marquee-item"><i class="bi bi-chat-dots"></i> Team Collaboration</span>
+            <span class="feature-marquee-item"><i class="bi bi-calendar-check"></i> Leave Management</span>
+            <span class="feature-marquee-item"><i class="bi bi-list-check"></i> Task Management</span>
+            <span class="feature-marquee-item"><i class="bi bi-geo-alt"></i> Meeting Scheduling</span>
+        </div>
+    </div>
+
+    <!-- Ticker Marquee -->
+    <div class="container">
+        <div class="ticker-marquee">
+            <div class="ticker-content">
+                <div class="ticker-item"><i class="bi bi-lightning ticker-icon"></i> Advanced Technology</div>
+                <div class="ticker-item"><i class="bi bi-shield-check ticker-icon"></i> Quality Assurance</div>
+                <div class="ticker-item"><i class="bi bi-leaf ticker-icon"></i> Sustainable Solutions</div>
+                <div class="ticker-item"><i class="bi bi-clock ticker-icon"></i> 24/7 Support</div>
+                <div class="ticker-item"><i class="bi bi-award ticker-icon"></i> 500+ Projects</div>
+                <div class="ticker-item"><i class="bi bi-star ticker-icon"></i> 50+ Years Experience</div>
+                <div class="ticker-item"><i class="bi bi-heart ticker-icon"></i> 100% Satisfaction</div>
+                <div class="ticker-item"><i class="bi bi-lightning ticker-icon"></i> Advanced Technology</div>
+                <div class="ticker-item"><i class="bi bi-shield-check ticker-icon"></i> Quality Assurance</div>
+                <div class="ticker-item"><i class="bi bi-leaf ticker-icon"></i> Sustainable Solutions</div>
+                <div class="ticker-item"><i class="bi bi-clock ticker-icon"></i> 24/7 Support</div>
+                <div class="ticker-item"><i class="bi bi-award ticker-icon"></i> 500+ Projects</div>
+                <div class="ticker-item"><i class="bi bi-star ticker-icon"></i> 50+ Years Experience</div>
+                <div class="ticker-item"><i class="bi bi-heart ticker-icon"></i> 100% Satisfaction</div>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero-section">
