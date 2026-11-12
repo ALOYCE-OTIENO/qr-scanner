@@ -48,6 +48,17 @@ class GroupController extends Controller
         if ($request->has('members')) {
             foreach ($request->members as $memberId) {
                 $group->users()->attach($memberId, ['is_admin' => false]);
+                
+                // Notify member
+                \App\Models\Notification::create([
+                    'user_id' => $memberId,
+                    'title' => 'Added to Group',
+                    'message' => "You have been added to the group: {$request->name}",
+                    'type' => 'system',
+                    'related_id' => $group->id,
+                    'route' => route('groups.show', $group->id),
+                    'is_read' => false
+                ]);
             }
         }
 
@@ -81,6 +92,17 @@ class GroupController extends Controller
         }
 
         $group->users()->attach($request->user_id, ['is_admin' => false]);
+
+        // Notify the new member
+        \App\Models\Notification::create([
+            'user_id' => $request->user_id,
+            'title' => 'Added to Group',
+            'message' => "You have been added to the group: {$group->name}",
+            'type' => 'system',
+            'related_id' => $group->id,
+            'route' => route('groups.show', $group->id),
+            'is_read' => false
+        ]);
 
         return back()->with('success', 'Member added successfully');
     }
