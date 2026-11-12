@@ -29,9 +29,9 @@ class GroupController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'members' => 'array',
+            'members' => 'nullable|array',
             'members.*' => 'exists:users,id',
-            'is_announcement' => 'boolean'
+            'is_announcement' => 'nullable|boolean'
         ]);
 
         $group = Group::create([
@@ -45,7 +45,7 @@ class GroupController extends Controller
         $group->users()->attach(Auth::id(), ['is_admin' => true]);
 
         // Add selected members
-        if ($request->has('members')) {
+        if ($request->filled('members') && is_array($request->members)) {
             foreach ($request->members as $memberId) {
                 $group->users()->attach($memberId, ['is_admin' => false]);
                 
