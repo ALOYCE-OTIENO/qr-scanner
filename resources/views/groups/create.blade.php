@@ -35,7 +35,8 @@
             </div>
 
             <div class="mb-3 form-check">
-                <input class="form-check-input" type="checkbox" id="is_announcement" name="is_announcement">
+                <input type="hidden" name="is_announcement" value="0">
+                <input class="form-check-input" type="checkbox" id="is_announcement" name="is_announcement" value="1">
                 <label class="form-check-label" for="is_announcement">
                     Announcement Group (only admins can post)
                 </label>
