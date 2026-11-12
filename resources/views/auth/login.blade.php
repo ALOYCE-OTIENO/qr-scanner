@@ -263,7 +263,7 @@
                 </div>
             </div>
 
-            <form id="loginForm" action="{{ route('login') }}" method="POST" class="mt-4" style="display: none;">
+            <form id="loginForm" action="{{ route('login.post') }}" method="POST" class="mt-4" style="display: none;">
                 @csrf
                 <input type="hidden" name="login_type" id="loginType" value="">
 
