@@ -45,7 +45,7 @@ class MeetingController extends Controller
             'end_time' => 'required|date_format:Y-m-d\TH:i|after:start_time',
             'location' => 'nullable|string|max:255',
             'type' => 'required|in:meeting,video_call,training',
-            'participants' => 'array',
+            'participants' => 'nullable|array',
             'participants.*' => 'exists:users,id'
         ]);
 
@@ -60,21 +60,21 @@ class MeetingController extends Controller
         ]);
 
         // Add participants
-        if ($request->has('participants')) {
+        if ($request->filled('participants') && is_array($request->participants)) {
             $meeting->participants()->attach($request->participants);
-        }
 
-        // Notify participants
-        foreach ($request->participants as $userId) {
-            \App\Models\Notification::create([
-                'user_id' => $userId,
-                'title' => 'New Meeting',
-                'message' => "You have been invited to: {$request->title}",
-                'type' => 'system',
-                'related_id' => $meeting->id,
-                'route' => route('meetings.show', $meeting->id),
-                'is_read' => false
-            ]);
+            // Notify participants
+            foreach ($request->participants as $userId) {
+                \App\Models\Notification::create([
+                    'user_id' => $userId,
+                    'title' => 'New Meeting',
+                    'message' => "You have been invited to: {$request->title}",
+                    'type' => 'system',
+                    'related_id' => $meeting->id,
+                    'route' => route('meetings.show', $meeting->id),
+                    'is_read' => false
+                ]);
+            }
         }
 
         return redirect()->route('meetings.index')->with('success', 'Meeting created successfully');
