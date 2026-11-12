@@ -47,6 +47,10 @@ class NotificationController extends Controller
         // Add unread message notifications first
         foreach ($groupedNotifications as $group) {
             foreach ($group['unread'] as $unread) {
+                // Fix the route to use the correct URL
+                if ($unread->route) {
+                    $unread->route = str_replace('http://localhost', 'http://127.0.0.1:8000', $unread->route);
+                }
                 $finalNotifications->push($unread);
             }
         }
@@ -63,6 +67,10 @@ class NotificationController extends Controller
                 $mostRecent = $group['read'][0];
                 $mostRecent->is_merged = true;
                 $mostRecent->merged_count = count($group['read']);
+                // Fix the route to use the correct URL
+                if ($mostRecent->route) {
+                    $mostRecent->route = str_replace('http://localhost', 'http://127.0.0.1:8000', $mostRecent->route);
+                }
                 $finalNotifications->push($mostRecent);
             }
         }
