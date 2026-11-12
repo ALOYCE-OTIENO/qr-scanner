@@ -470,7 +470,12 @@
             <div class="d-flex gap-2">
                 <a href="{{ route('notifications.index') }}" class="position-relative">
                     <i class="bi bi-bell" style="font-size: 1.5rem; color: #333;"></i>
-                    <span class="notification-badge">3</span>
+                    @php
+                        $unreadCount = auth()->user()->notifications()->where('is_read', false)->count();
+                    @endphp
+                    @if($unreadCount > 0)
+                        <span class="notification-badge">{{ $unreadCount }}</span>
+                    @endif
                 </a>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
