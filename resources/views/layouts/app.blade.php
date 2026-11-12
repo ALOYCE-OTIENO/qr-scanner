@@ -276,6 +276,12 @@
             color: #1890ff;
         }
 
+        /* Notification Styling */
+        .bg-wecom-green-light {
+            background-color: var(--wecom-green-light) !important;
+            border-left: 4px solid var(--wecom-green);
+        }
+
         /* Form */
         .form-label {
             color: #333;

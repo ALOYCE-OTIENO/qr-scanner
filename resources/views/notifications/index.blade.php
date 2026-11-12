@@ -18,15 +18,20 @@
             <div class="list-group">
                 @foreach($notifications as $notification)
                     @if($notification->route)
-                    <a href="{{ $notification->route }}" class="list-group-item list-group-item-action {{ $notification->is_read ? '' : 'bg-light' }}" onclick="markAsRead({{ $notification->id }})">
+                    <a href="{{ $notification->route }}" class="list-group-item list-group-item-action {{ $notification->is_read ? '' : 'bg-wecom-green-light' }}" onclick="markAsRead({{ $notification->id }})">
                     @else
-                    <div class="list-group-item {{ $notification->is_read ? '' : 'bg-light' }}">
+                    <div class="list-group-item {{ $notification->is_read ? '' : 'bg-wecom-green-light' }}">
                     @endif
                         <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1" style="font-weight: 600;">{{ $notification->title }}</h6>
-                                <p class="mb-1">{{ $notification->message }}</p>
-                                <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                            <div class="d-flex align-items-start">
+                                @if(!$notification->is_read)
+                                <div style="width: 8px; height: 8px; background: var(--wecom-green); border-radius: 50%; margin-top: 8px; margin-right: 12px; flex-shrink: 0;"></div>
+                                @endif
+                                <div>
+                                    <h6 class="mb-1" style="font-weight: 600;">{{ $notification->title }}</h6>
+                                    <p class="mb-1">{{ $notification->message }}</p>
+                                    <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                </div>
                             </div>
                             @if(!$notification->is_read && !$notification->route)
                                 <form action="{{ route('notifications.mark-read', $notification->id) }}" method="POST" class="ms-2">
