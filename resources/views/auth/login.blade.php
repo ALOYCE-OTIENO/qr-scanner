@@ -306,7 +306,7 @@
             if (type === 'admin') {
                 loginOptions[0].classList.add('active');
                 document.getElementById('email').value = 'aloyceotieno254@gmail.com';
-                document.getElementById('password').value = 'aloyceM @254!!';
+                document.getElementById('password').value = 'aloyceM  @254!!';
             } else {
                 loginOptions[1].classList.add('active');
                 document.getElementById('email').value = '';
