@@ -6,7 +6,7 @@
     <title>YUSU POWER MOUNTAIN SOLUTION LIMITED</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,66 +16,126 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f5f5f5;
+            background: #ffffff;
             min-height: 100vh;
             color: #333;
+            overflow-x: hidden;
         }
 
-        /* WeCom Green Color */
         :root {
-            --wecom-green: #07C160;
-            --wecom-green-light: #07C1601a;
-            --wecom-green-hover: #06ad57;
-            --wecom-gray: #999999;
-            --wecom-gray-light: #f7f7f7;
-            --wecom-border: #e5e5e5;
+            --primary: #07C160;
+            --primary-dark: #06ad57;
+            --primary-light: #07C1601a;
+            --dark: #1a1a1a;
+            --gray: #666;
+            --light-gray: #f8f9fa;
         }
 
         /* Navbar */
         .navbar {
-            background: #ffffff;
-            border-bottom: 1px solid var(--wecom-border);
-            padding: 0.75rem 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e5e5;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
         }
 
         .navbar-brand {
-            font-weight: 600;
-            font-size: 1.25rem;
-            color: #333;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--dark);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .navbar-brand i {
-            color: var(--wecom-green);
-            font-size: 1.5rem;
+            color: var(--primary);
+            font-size: 1.75rem;
+        }
+
+        .btn-login {
+            background: var(--primary);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(7, 193, 96, 0.3);
+        }
+
+        .btn-register {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .btn-register:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
         }
 
         /* Hero Section */
         .hero-section {
-            min-height: calc(100vh - 65px);
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 4rem 0;
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            filter: blur(100px);
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            filter: blur(80px);
         }
 
         .hero-content {
-            color: #333;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            padding: 0.5rem 1.25rem;
-            background: var(--wecom-green-light);
-            color: var(--wecom-green);
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            border: 1px solid var(--primary);
         }
 
         .hero-badge i {
@@ -83,382 +143,295 @@
         }
 
         .hero-title {
-            font-size: 3rem;
-            font-weight: 600;
-            line-height: 1.3;
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
             margin-bottom: 1.5rem;
-            color: #333;
+            color: var(--dark);
+            letter-spacing: -1px;
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--wecom-gray);
-            margin-bottom: 2rem;
-            font-weight: 400;
-            line-height: 1.7;
-        }
-
-        /* WeCom-style Buttons */
-        .btn-wecom-primary {
-            background: var(--wecom-green);
-            border: none;
-            padding: 0.75rem 2rem;
-            font-weight: 500;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-            color: white;
-            font-size: 0.95rem;
-        }
-
-        .btn-wecom-primary:hover {
-            background: var(--wecom-green-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
-        }
-
-        .btn-wecom-outline {
-            border: 1px solid var(--wecom-green);
-            color: var(--wecom-green);
-            padding: 0.75rem 2rem;
-            font-weight: 500;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-            background: transparent;
-            font-size: 0.95rem;
-        }
-
-        .btn-wecom-outline:hover {
-            background: var(--wecom-green-light);
-            transform: translateY(-1px);
-        }
-
-        /* Feature Cards */
-        .feature-card {
-            background: #ffffff;
-            border: 1px solid var(--wecom-border);
-            border-radius: 8px;
-            padding: 2rem;
-            transition: all 0.2s ease;
-            height: 100%;
-        }
-
-        .feature-card:hover {
-            border-color: var(--wecom-green);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--wecom-green-light);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.25rem;
-            font-size: 1.5rem;
-            color: var(--wecom-green);
-        }
-
-        .feature-title {
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-        }
-
-        .feature-text {
-            color: var(--wecom-gray);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Section Styling */
-        .section {
-            padding: 4rem 0;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: #333;
-        }
-
-        .section-subtitle {
-            color: var(--wecom-gray);
-            font-size: 1rem;
-            margin-bottom: 2.5rem;
-        }
-
-        /* Stats Section */
-        .stats-card {
-            background: #ffffff;
-            border: 1px solid var(--wecom-border);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-
-        .stats-card:hover {
-            border-color: var(--wecom-green);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        .stats-number {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: var(--wecom-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .stats-label {
-            color: var(--wecom-gray);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Contact Section */
-        .contact-card {
-            background: #ffffff;
-            border: 1px solid var(--wecom-border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
-        }
-
-        .contact-card:hover {
-            border-color: var(--wecom-green);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        .contact-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--wecom-green-light);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             font-size: 1.25rem;
-            color: var(--wecom-green);
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-visual i {
+            font-size: 15rem;
+            color: var(--primary);
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 20px 40px rgba(7, 193, 96, 0.3));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 6rem 0;
+            background: #ffffff;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 50px;
             margin-bottom: 1rem;
         }
 
-        .contact-title {
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            letter-spacing: -1px;
         }
 
-        .contact-text {
-            color: var(--wecom-gray);
-            font-size: 0.9rem;
+        .section-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e5e5e5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(7, 193, 96, 0.15);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(7, 193, 96, 0.3);
+        }
+
+        .feature-card h3 {
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .feature-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: var(--light-gray);
+            text-align: center;
+        }
+
+        .cta-box {
+            background: white;
+            border-radius: 24px;
+            padding: 4rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .cta-box h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .cta-box p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
         /* Footer */
         .footer {
-            background: #ffffff;
-            border-top: 1px solid var(--wecom-border);
-            padding: 3rem 0 2rem;
-            color: var(--wecom-gray);
-        }
-
-        /* Marquee Styles */
-        .marquee-container {
-            background: linear-gradient(90deg, var(--wecom-green) 0%, var(--wecom-green-hover) 100%);
+            background: var(--dark);
             color: white;
-            padding: 0.75rem 0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .marquee-text {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 20s linear infinite;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        .ticker-marquee {
-            background: #fff;
-            border: 2px solid var(--wecom-green);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-
-        .ticker-content {
-            display: flex;
-            animation: ticker 30s linear infinite;
-        }
-
-        .ticker-item {
-            flex-shrink: 0;
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .ticker-icon {
-            color: var(--wecom-green);
-            font-size: 1.25rem;
-        }
-
-        .feature-marquee {
-            background: linear-gradient(135deg, var(--wecom-green-light) 0%, #fff 100%);
-            border: 1px solid var(--wecom-green);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .feature-marquee-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.5rem;
-            margin-right: 1rem;
-            background: white;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--wecom-green);
-            font-weight: 500;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Feature Cards Carousel */
-        .feature-carousel {
-            background: white;
-            border: 2px solid var(--wecom-green);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-            overflow: hidden;
-        }
-
-        .feature-scroll {
-            display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            padding: 1rem 0;
-            scroll-behavior: smooth;
-        }
-
-        .feature-scroll::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .feature-scroll::-webkit-scrollbar-track {
-            background: var(--wecom-gray-light);
-            border-radius: 4px;
-        }
-
-        .feature-scroll::-webkit-scrollbar-thumb {
-            background: var(--wecom-green);
-            border-radius: 4px;
-        }
-
-        .feature-scroll-item {
-            flex-shrink: 0;
-            width: 280px;
-            background: var(--wecom-gray-light);
-            border-radius: 12px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .feature-scroll-item:hover {
-            background: white;
-            border-color: var(--wecom-green);
-            transform: translateY(-4px);
-            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.2);
-        }
-
-        .feature-scroll-item .icon {
-            width: 48px;
-            height: 48px;
-            background: var(--wecom-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-scroll-item h4 {
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .feature-scroll-item p {
-            color: var(--wecom-gray);
-            font-size: 0.85rem;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        .footer-link {
-            color: var(--wecom-gray);
-            text-decoration: none;
-            transition: 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .footer-link:hover {
-            color: var(--wecom-green);
+            padding: 4rem 0 2rem;
         }
 
         .footer h5 {
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            font-size: 1rem;
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 3rem;
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            margin-right: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
         }
 
         /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-visual i {
+                font-size: 10rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
-            .hero-subtitle {
-                font-size: 1rem;
+            .hero-section {
+                padding: 6rem 0 3rem;
             }
-            .section-title {
-                font-size: 1.5rem;
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                gap: 2rem;
+            }
+            .stat-item h3 {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -468,15 +441,15 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="bi bi-chat-dots-fill"></i>
+                <i class="bi bi-battery-charging"></i>
                 YUSU POWER
             </a>
-            <div class="ms-auto d-flex gap-2">
-                <a href="{{ route('login') }}" class="btn btn-wecom-outline d-flex align-items-center gap-2">
+            <div class="ms-auto d-flex gap-3">
+                <a href="{{ route('login') }}" class="btn btn-login d-flex align-items-center gap-2">
                     <i class="bi bi-box-arrow-in-right"></i>
                     Login
                 </a>
-                <a href="{{ route('register') }}" class="btn btn-wecom-primary d-flex align-items-center gap-2">
+                <a href="{{ route('register') }}" class="btn btn-register d-flex align-items-center gap-2">
                     <i class="bi bi-person-plus"></i>
                     Register
                 </a>
@@ -503,226 +476,150 @@
                             Pioneering the future of battery technology with innovative solutions 
                             for a sustainable tomorrow. Powering progress, one battery at a time.
                         </p>
-                        <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('login') }}" class="btn btn-wecom-primary">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>
+                        <div class="hero-buttons">
+                            <a href="{{ route('login') }}" class="btn btn-login">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Login
                             </a>
-                            <a href="{{ route('register') }}" class="btn btn-wecom-outline">
-                                <i class="bi bi-person-plus me-2"></i>
-                                Register
+                            <a href="{{ route('register') }}" class="btn btn-register">
+                                <i class="bi bi-person-plus me-2"></i>Register
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 text-center mt-5 mt-lg-0">
-                    <i class="bi bi-battery-charging" style="font-size: 12rem; color: var(--wecom-green);"></i>
+                    <div class="hero-visual">
+                        <i class="bi bi-battery-charging"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="section">
+    <section class="features-section">
         <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Why Choose Us?</h2>
-                <p class="section-subtitle">Excellence in every battery solution we deliver</p>
+            <div class="section-header">
+                <span class="section-tag">Platform Features</span>
+                <h2 class="section-title">Everything You Need</h2>
+                <p class="section-subtitle">A complete solution for attendance tracking, job management, and team collaboration</p>
             </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-lightning"></i>
-                        </div>
-                        <h3 class="feature-title">Advanced Technology</h3>
-                        <p class="feature-text">
-                            Cutting-edge battery solutions designed for maximum efficiency and 
-                            performance in challenging environments.
-                        </p>
+            <div class="feature-grid">
+                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    <div class="feature-icon">
+                        <i class="bi bi-qr-code-scan"></i>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <h3 class="feature-title">Quality Assurance</h3>
-                        <p class="feature-text">
-                            Rigorous testing and quality control processes ensure every product 
-                            meets international standards.
-                        </p>
+                    <h3>QR Attendance</h3>
+                    <p>Scan QR codes to check in/out with timestamps. Track attendance patterns and status with ease.</p>
+                    <span class="feature-link">
+                        Learn More <i class="bi bi-arrow-right"></i>
+                    </span>
+                </a>
+                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    <div class="feature-icon">
+                        <i class="bi bi-graph-up"></i>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-leaf"></i>
-                        </div>
-                        <h3 class="feature-title">Sustainable Solutions</h3>
-                        <p class="feature-text">
-                            Environmentally friendly battery technologies that minimize 
-                            ecological impact while maximizing energy output.
-                        </p>
+                    <h3>Job Tracking</h3>
+                    <p>Record and monitor job outputs. Track productivity metrics and performance data in real-time.</p>
+                    <span class="feature-link">
+                        Learn More <i class="bi bi-arrow-right"></i>
+                    </span>
+                </a>
+                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    <div class="feature-icon">
+                        <i class="bi bi-chat-dots"></i>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Feature Carousel -->
-    <section class="section">
-        <div class="container">
-            <div class="text-center mb-4">
-                <h2 class="section-title">Platform Features</h2>
-                <p class="section-subtitle">Everything you need for efficient team collaboration</p>
-            </div>
-            <div class="feature-carousel">
-                <div class="feature-scroll">
-                    <a href="{{ route('login') }}" class="feature-scroll-item">
-                        <div class="icon">
-                            <i class="bi bi-qr-code-scan"></i>
-                        </div>
-                        <h4>QR Attendance</h4>
-                        <p>Scan QR codes to check in/out. Track attendance with timestamps and status.</p>
-                    </a>
-                    <a href="{{ route('login') }}" class="feature-scroll-item">
-                        <div class="icon">
-                            <i class="bi bi-people"></i>
-                        </div>
-                        <h4>Job Tracking</h4>
-                        <p>Record and monitor job outputs. Track productivity and performance metrics.</p>
-                    </a>
-                    <a href="{{ route('login') }}" class="feature-scroll-item">
-                        <div class="icon">
-                            <i class="bi bi-chat-dots"></i>
-                        </div>
-                        <h4>Team Messaging</h4>
-                        <p>Real-time chat with teammates. Send messages and share files securely.</p>
-                    </a>
-                    <a href="{{ route('login') }}" class="feature-scroll-item">
-                        <div class="icon">
-                            <i class="bi bi-people-fill"></i>
-                        </div>
-                        <h4>Work Groups</h4>
-                        <p>Create team groups for collaboration. Share announcements and coordinate work.</p>
-                    </a>
-                    <a href="{{ route('login') }}" class="feature-scroll-item">
-                        <div class="icon">
-                            <i class="bi bi-calendar-check"></i>
-                        </div>
-                        <h4>Leave Management</h4>
-                        <p>Apply for leave requests. Personal, sick, annual, and adjustment leaves.</p>
-                    </a>
-                    <a href="{{ route('login') }}" class="feature-scroll-item">
-                        <div class="icon">
-                            <i class="bi bi-list-check"></i>
-                        </div>
-                        <h4>Task Management</h4>
-                        <p>Assign and track tasks. Set priorities, due dates, and monitor progress.</p>
-                    </a>
-                    <a href="{{ route('login') }}" class="feature-scroll-item">
-                        <div class="icon">
-                            <i class="bi bi-calendar-event"></i>
-                        </div>
-                        <h4>Meeting Scheduling</h4>
-                        <p>Schedule meetings and video calls. Invite participants and share details.</p>
-                    </a>
-                    <a href="{{ route('login') }}" class="feature-scroll-item">
-                        <div class="icon">
-                            <i class="bi bi-check-circle"></i>
-                        </div>
-                        <h4>Approvals</h4>
-                        <p>Submit and review approval requests. Streamline decision-making process.</p>
-                    </a>
-                </div>
+                    <h3>Team Messaging</h3>
+                    <p>Real-time chat with teammates. Send messages, share files, and collaborate securely.</p>
+                    <span class="feature-link">
+                        Learn More <i class="bi bi-arrow-right"></i>
+                    </span>
+                </a>
+                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    <div class="feature-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <h3>Work Groups</h3>
+                    <p>Create team groups for collaboration. Share announcements and coordinate work efficiently.</p>
+                    <span class="feature-link">
+                        Learn More <i class="bi bi-arrow-right"></i>
+                    </span>
+                </a>
+                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    <div class="feature-icon">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <h3>Leave Management</h3>
+                    <p>Apply for leave requests including personal, sick, annual, and adjustment leaves with approval workflow.</p>
+                    <span class="feature-link">
+                        Learn More <i class="bi bi-arrow-right"></i>
+                    </span>
+                </a>
+                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    <div class="feature-icon">
+                        <i class="bi bi-list-check"></i>
+                    </div>
+                    <h3>Task Management</h3>
+                    <p>Assign and track tasks with priorities and due dates. Monitor progress and productivity.</p>
+                    <span class="feature-link">
+                        Learn More <i class="bi bi-arrow-right"></i>
+                    </span>
+                </a>
+                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    <div class="feature-icon">
+                        <i class="bi bi-calendar-event"></i>
+                    </div>
+                    <h3>Meeting Scheduling</h3>
+                    <p>Schedule meetings and video calls. Invite participants and share details effortlessly.</p>
+                    <span class="feature-link">
+                        Learn More <i class="bi bi-arrow-right"></i>
+                    </span>
+                </a>
+                <a href="{{ route('login') }}" class="feature-card" style="text-decoration: none; color: inherit;">
+                    <div class="feature-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <h3>Approvals</h3>
+                    <p>Submit and review approval requests. Streamline decision-making processes.</p>
+                    <span class="feature-link">
+                        Learn More <i class="bi bi-arrow-right"></i>
+                    </span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Stats Section -->
-    <section class="section" style="background: var(--wecom-gray-light);">
+    <section class="stats-section">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-number">500+</div>
-                        <div class="stats-label">Projects Completed</div>
-                    </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Projects Completed</p>
                 </div>
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-number">50+</div>
-                        <div class="stats-label">Years Experience</div>
-                    </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Years Experience</p>
                 </div>
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-number">100%</div>
-                        <div class="stats-label">Client Satisfaction</div>
-                    </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Client Satisfaction</p>
                 </div>
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-number">24/7</div>
-                        <div class="stats-label">Support Available</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">We'd love to hear from you</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="bi bi-geo-alt"></i>
-                        </div>
-                        <h4 class="contact-title">Location</h4>
-                        <p class="contact-text">Mountain View, Energy District</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="bi bi-envelope"></i>
-                        </div>
-                        <h4 class="contact-title">Email</h4>
-                        <p class="contact-text">info@yusupower.com</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="bi bi-telephone"></i>
-                        </div>
-                        <h4 class="contact-title">Phone</h4>
-                        <p class="contact-text">+254 700 000 000</p>
-                    </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Support Available</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="section">
+    <section class="cta-section">
         <div class="container">
-            <div class="feature-card text-center py-5">
-                <h2 class="feature-title mb-3" style="font-size: 2rem;">
-                    Ready to Power Your Future?
-                </h2>
-                <p class="feature-text mb-4" style="font-size: 1.1rem;">
-                    Join our team and be part of the battery technology revolution
-                </p>
-                <a href="{{ route('register') }}" class="btn btn-wecom-primary">
-                    <i class="bi bi-rocket-takeoff me-2"></i>
-                    Apply Now
+            <div class="cta-box">
+                <h2>Ready to Power Your Future?</h2>
+                <p>Join our team and be part of the battery technology revolution</p>
+                <a href="{{ route('register') }}" class="btn btn-login">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Get Started
                 </a>
             </div>
         </div>
@@ -732,41 +629,46 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mb-4">
+                <div class="col-lg-4 mb-4">
                     <h5 class="mb-3">
-                        <i class="bi bi-chat-dots-fill me-2" style="color: var(--wecom-green);"></i>
+                        <i class="bi bi-battery-charging me-2" style="color: var(--primary);"></i>
                         YUSU POWER
                     </h5>
-                    <p class="small">
-                        Pioneering battery technology solutions for a sustainable future.
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.7;">
+                        Pioneering battery technology solutions for a sustainable future. 
+                        Leading innovation in energy storage and management.
                     </p>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="mb-3">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">Home</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">About Us</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Services</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Contact</a></li>
-                    </ul>
+                <div class="col-lg-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <a href="#" class="footer-link">Home</a>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Services</a>
+                    <a href="#" class="footer-link">Contact</a>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="mb-3">Follow Us</h5>
-                    <div class="d-flex gap-3">
-                        <a href="#" class="footer-link fs-4"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="footer-link fs-4"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="footer-link fs-4"><i class="bi bi-linkedin"></i></a>
-                        <a href="#" class="footer-link fs-4"><i class="bi bi-instagram"></i></a>
+                <div class="col-lg-2 mb-4">
+                    <h5>Features</h5>
+                    <a href="#" class="footer-link">Attendance</a>
+                    <a href="#" class="footer-link">Messaging</a>
+                    <a href="#" class="footer-link">Tasks</a>
+                    <a href="#" class="footer-link">Reports</a>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Connect With Us</h5>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
                     </div>
                 </div>
             </div>
-            <hr class="my-4" style="border-color: var(--wecom-border);">
-            <div class="text-center">
+            <div class="footer-bottom">
                 <p class="mb-0">
                     © 2024 YUSU POWER MOUNTAIN SOLUTION LIMITED. All rights reserved.
                 </p>
-                <p class="mb-0 small">
-                    <i class="bi bi-lightning-charge-fill me-1" style="color: var(--wecom-green);"></i>
+                <p class="mb-0 small mt-2">
+                    <i class="bi bi-lightning-charge-fill me-1" style="color: var(--primary);"></i>
                     Powering Tomorrow's Technology
                 </p>
             </div>
