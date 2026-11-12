@@ -10,6 +10,7 @@
         </a>
         {{ $otherUser->name }}
     </h1>
+    @if($messages->count() > 0)
     <div class="d-flex gap-2">
         <form method="POST" action="{{ route('messages.destroy-selected') }}" class="d-inline">
             @csrf
@@ -25,6 +26,7 @@
             </button>
         </form>
     </div>
+    @endif
 </div>
 
 <div class="card">
