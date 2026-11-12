@@ -56,11 +56,20 @@ class MessageController extends Controller
             'type' => 'in:text,image,file'
         ]);
 
-        Message::create([
+        $message = Message::create([
             'sender_id' => Auth::id(),
             'receiver_id' => $request->receiver_id,
             'content' => $request->content,
             'type' => $request->type ?? 'text',
+            'is_read' => false
+        ]);
+
+        // Create notification for the receiver
+        \App\Models\Notification::create([
+            'user_id' => $request->receiver_id,
+            'title' => 'New Message',
+            'message' => Auth::user()->name . ' sent you a message',
+            'type' => 'message',
             'is_read' => false
         ]);
 
