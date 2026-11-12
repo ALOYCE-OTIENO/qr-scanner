@@ -57,6 +57,10 @@ class NotificationController extends Controller
 
         // Add other notifications (leaves, system, etc.)
         foreach ($otherNotifications as $other) {
+            // Fix the route to use the correct URL
+            if ($other->route) {
+                $other->route = str_replace('http://localhost', 'http://127.0.0.1:8000', $other->route);
+            }
             $finalNotifications->push($other);
         }
 

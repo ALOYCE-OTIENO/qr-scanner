@@ -60,6 +60,8 @@ class TaskController extends Controller
                 'title' => 'New Task Assigned',
                 'message' => "You have been assigned a new task: {$request->title}",
                 'type' => 'system',
+                'related_id' => $task->id,
+                'route' => route('tasks.show', $task->id),
                 'is_read' => false
             ]);
         }
@@ -158,6 +160,8 @@ class TaskController extends Controller
                 'title' => 'Task Status Updated',
                 'message' => "Task '{$task->title}' status changed to {$request->status}",
                 'type' => 'system',
+                'related_id' => $task->id,
+                'route' => route('tasks.show', $task->id),
                 'is_read' => false
             ]);
         }

@@ -71,6 +71,8 @@ class MeetingController extends Controller
                 'title' => 'New Meeting',
                 'message' => "You have been invited to: {$request->title}",
                 'type' => 'system',
+                'related_id' => $meeting->id,
+                'route' => route('meetings.show', $meeting->id),
                 'is_read' => false
             ]);
         }

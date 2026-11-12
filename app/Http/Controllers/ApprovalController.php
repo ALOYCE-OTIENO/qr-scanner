@@ -62,7 +62,7 @@ class ApprovalController extends Controller
             ];
         }
 
-        Approval::create([
+        $approval = Approval::create([
             'requester_id' => Auth::id(),
             'approver_id' => $request->approver_id,
             'type' => $request->type,
@@ -73,6 +73,17 @@ class ApprovalController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'amount' => $request->amount
+        ]);
+
+        // Notify the approver
+        \App\Models\Notification::create([
+            'user_id' => $request->approver_id,
+            'title' => 'New Approval Request',
+            'message' => Auth::user()->name . " has submitted an approval request: " . $request->title,
+            'type' => 'system',
+            'related_id' => $approval->id,
+            'route' => route('approvals.show', $approval->id),
+            'is_read' => false
         ]);
 
         return redirect()->route('approvals.index')->with('success', 'Approval request submitted successfully');
@@ -109,6 +120,8 @@ class ApprovalController extends Controller
             'title' => 'Approval Approved',
             'message' => "Your approval request '{$approval->title}' has been approved",
             'type' => 'system',
+            'related_id' => $approval->id,
+            'route' => route('approvals.show', $approval->id),
             'is_read' => false
         ]);
 
@@ -139,6 +152,8 @@ class ApprovalController extends Controller
             'title' => 'Approval Rejected',
             'message' => "Your approval request '{$approval->title}' has been rejected. Reason: {$request->rejection_reason}",
             'type' => 'system',
+            'related_id' => $approval->id,
+            'route' => route('approvals.show', $approval->id),
             'is_read' => false
         ]);
 
