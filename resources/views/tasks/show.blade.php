@@ -9,7 +9,7 @@
         @if($task->creator_id === auth()->id() || auth()->user()->isAdmin())
         <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-wecom-outline">Edit</a>
         @endif
-        <a href="{{ route('tasks.index') }}" class="btn btn-wecom-outline">Back</a>
+        <a href="javascript:history.back()" class="btn btn-wecom-outline">Back</a>
     </div>
 </div>
 

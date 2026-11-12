@@ -5,7 +5,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>
-        <a href="{{ route('messages.index') }}" class="back-link me-2">
+        <a href="javascript:history.back()" class="back-link me-2">
             <i class="bi bi-arrow-left"></i>
         </a>
         {{ $otherUser->name }}

@@ -7,7 +7,7 @@
     <h1>Employee: {{ $employee->full_name }}</h1>
     <div>
         <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-outline-primary">Edit</a>
-        <a href="{{ route('employees.index') }}" class="btn btn-outline-secondary">Back</a>
+        <a href="javascript:history.back()" class="btn btn-outline-secondary">Back</a>
     </div>
 </div>
 

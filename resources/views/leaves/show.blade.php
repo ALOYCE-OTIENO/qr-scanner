@@ -5,7 +5,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Leave Details</h1>
-    <a href="{{ route('leaves.index') }}" class="btn btn-wecom-outline">
+    <a href="javascript:history.back()" class="btn btn-wecom-outline">
         <i class="bi bi-arrow-left me-2"></i>Back
     </a>
 </div>
