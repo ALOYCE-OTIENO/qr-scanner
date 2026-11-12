@@ -31,6 +31,67 @@
             --light-gray: #f8f9fa;
         }
 
+        /* Top Marquee */
+        .top-marquee {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 50%, var(--primary) 100%);
+            background-size: 200% 100%;
+            animation: gradientMove 8s ease infinite;
+            color: white;
+            padding: 0.6rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .marquee-wrapper {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .marquee-content {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 3rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .marquee-item i {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .marquee-item span {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .marquee-item strong {
+            color: white;
+            font-weight: 700;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .top-marquee:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
         /* Navbar */
         .navbar {
             background: rgba(255, 255, 255, 0.95);
@@ -544,6 +605,10 @@
             .stat-item h3 {
                 font-size: 2.5rem;
             }
+            .marquee-item {
+                padding: 0 1.5rem;
+                font-size: 0.85rem;
+            }
         }
 
         /* Modal Styles */
@@ -620,6 +685,79 @@
     </style>
 </head>
 <body>
+    <!-- Top Marquee -->
+    <div class="top-marquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <div class="marquee-item">
+                    <i class="bi bi-trophy-fill"></i>
+                    <span><strong>30+ Years</strong> of Excellence in Battery Technology</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-globe2"></i>
+                    <span><strong>Global Presence:</strong> China HQ & 10+ African Countries</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-award-fill"></i>
+                    <span><strong>Award-Winning</strong> Innovation in Energy Storage</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Cutting-Edge</strong> Battery Solutions for Tomorrow</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-shield-check"></i>
+                    <span><strong>ISO Certified</strong> Quality & Safety Standards</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-people-fill"></i>
+                    <span><strong>500+ Skilled</strong> Professionals Worldwide</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-rocket-takeoff"></i>
+                    <span><strong>1000+ Projects</strong> Successfully Delivered</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-star-fill"></i>
+                    <span><strong>Trusted by</strong> Industry Leaders Worldwide</span>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="marquee-item">
+                    <i class="bi bi-trophy-fill"></i>
+                    <span><strong>30+ Years</strong> of Excellence in Battery Technology</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-globe2"></i>
+                    <span><strong>Global Presence:</strong> China HQ & 10+ African Countries</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-award-fill"></i>
+                    <span><strong>Award-Winning</strong> Innovation in Energy Storage</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Cutting-Edge</strong> Battery Solutions for Tomorrow</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-shield-check"></i>
+                    <span><strong>ISO Certified</strong> Quality & Safety Standards</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-people-fill"></i>
+                    <span><strong>500+ Skilled</strong> Professionals Worldwide</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-rocket-takeoff"></i>
+                    <span><strong>1000+ Projects</strong> Successfully Delivered</span>
+                </div>
+                <div class="marquee-item">
+                    <i class="bi bi-star-fill"></i>
+                    <span><strong>Trusted by</strong> Industry Leaders Worldwide</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
