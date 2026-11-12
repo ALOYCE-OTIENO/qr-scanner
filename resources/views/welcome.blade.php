@@ -354,6 +354,83 @@
             }
         }
 
+        /* Feature Cards Carousel */
+        .feature-carousel {
+            background: white;
+            border: 2px solid var(--wecom-green);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .feature-scroll {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scroll-behavior: smooth;
+        }
+
+        .feature-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .feature-scroll::-webkit-scrollbar-track {
+            background: var(--wecom-gray-light);
+            border-radius: 4px;
+        }
+
+        .feature-scroll::-webkit-scrollbar-thumb {
+            background: var(--wecom-green);
+            border-radius: 4px;
+        }
+
+        .feature-scroll-item {
+            flex-shrink: 0;
+            width: 280px;
+            background: var(--wecom-gray-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-scroll-item:hover {
+            background: white;
+            border-color: var(--wecom-green);
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.2);
+        }
+
+        .feature-scroll-item .icon {
+            width: 48px;
+            height: 48px;
+            background: var(--wecom-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-scroll-item h4 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .feature-scroll-item p {
+            color: var(--wecom-gray);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
         .footer-link {
             color: var(--wecom-gray);
             text-decoration: none;
@@ -406,47 +483,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- Top Marquee Banner -->
-    <div class="marquee-container">
-        <div class="marquee-text">
-            🎉 Welcome to YUSU POWER MOUNTAIN SOLUTION LIMITED • Leading Battery Technology Solutions • QR Attendance & Job Tracking System • WeCom-Style Collaboration Platform •
-        </div>
-    </div>
-
-    <!-- Feature Marquee -->
-    <div class="container mt-4">
-        <div class="feature-marquee">
-            <span class="feature-marquee-item"><i class="bi bi-qr-code-scan"></i> QR Attendance</span>
-            <span class="feature-marquee-item"><i class="bi bi-people"></i> Job Tracking</span>
-            <span class="feature-marquee-item"><i class="bi bi-chat-dots"></i> Team Collaboration</span>
-            <span class="feature-marquee-item"><i class="bi bi-calendar-check"></i> Leave Management</span>
-            <span class="feature-marquee-item"><i class="bi bi-list-check"></i> Task Management</span>
-            <span class="feature-marquee-item"><i class="bi bi-geo-alt"></i> Meeting Scheduling</span>
-        </div>
-    </div>
-
-    <!-- Ticker Marquee -->
-    <div class="container">
-        <div class="ticker-marquee">
-            <div class="ticker-content">
-                <div class="ticker-item"><i class="bi bi-lightning ticker-icon"></i> Advanced Technology</div>
-                <div class="ticker-item"><i class="bi bi-shield-check ticker-icon"></i> Quality Assurance</div>
-                <div class="ticker-item"><i class="bi bi-leaf ticker-icon"></i> Sustainable Solutions</div>
-                <div class="ticker-item"><i class="bi bi-clock ticker-icon"></i> 24/7 Support</div>
-                <div class="ticker-item"><i class="bi bi-award ticker-icon"></i> 500+ Projects</div>
-                <div class="ticker-item"><i class="bi bi-star ticker-icon"></i> 50+ Years Experience</div>
-                <div class="ticker-item"><i class="bi bi-heart ticker-icon"></i> 100% Satisfaction</div>
-                <div class="ticker-item"><i class="bi bi-lightning ticker-icon"></i> Advanced Technology</div>
-                <div class="ticker-item"><i class="bi bi-shield-check ticker-icon"></i> Quality Assurance</div>
-                <div class="ticker-item"><i class="bi bi-leaf ticker-icon"></i> Sustainable Solutions</div>
-                <div class="ticker-item"><i class="bi bi-clock ticker-icon"></i> 24/7 Support</div>
-                <div class="ticker-item"><i class="bi bi-award ticker-icon"></i> 500+ Projects</div>
-                <div class="ticker-item"><i class="bi bi-star ticker-icon"></i> 50+ Years Experience</div>
-                <div class="ticker-item"><i class="bi bi-heart ticker-icon"></i> 100% Satisfaction</div>
-            </div>
-        </div>
-    </div>
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -528,6 +564,76 @@
                             ecological impact while maximizing energy output.
                         </p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Carousel -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title">Platform Features</h2>
+                <p class="section-subtitle">Everything you need for efficient team collaboration</p>
+            </div>
+            <div class="feature-carousel">
+                <div class="feature-scroll">
+                    <a href="{{ route('login') }}" class="feature-scroll-item">
+                        <div class="icon">
+                            <i class="bi bi-qr-code-scan"></i>
+                        </div>
+                        <h4>QR Attendance</h4>
+                        <p>Scan QR codes to check in/out. Track attendance with timestamps and status.</p>
+                    </a>
+                    <a href="{{ route('login') }}" class="feature-scroll-item">
+                        <div class="icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h4>Job Tracking</h4>
+                        <p>Record and monitor job outputs. Track productivity and performance metrics.</p>
+                    </a>
+                    <a href="{{ route('login') }}" class="feature-scroll-item">
+                        <div class="icon">
+                            <i class="bi bi-chat-dots"></i>
+                        </div>
+                        <h4>Team Messaging</h4>
+                        <p>Real-time chat with teammates. Send messages and share files securely.</p>
+                    </a>
+                    <a href="{{ route('login') }}" class="feature-scroll-item">
+                        <div class="icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <h4>Work Groups</h4>
+                        <p>Create team groups for collaboration. Share announcements and coordinate work.</p>
+                    </a>
+                    <a href="{{ route('login') }}" class="feature-scroll-item">
+                        <div class="icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h4>Leave Management</h4>
+                        <p>Apply for leave requests. Personal, sick, annual, and adjustment leaves.</p>
+                    </a>
+                    <a href="{{ route('login') }}" class="feature-scroll-item">
+                        <div class="icon">
+                            <i class="bi bi-list-check"></i>
+                        </div>
+                        <h4>Task Management</h4>
+                        <p>Assign and track tasks. Set priorities, due dates, and monitor progress.</p>
+                    </a>
+                    <a href="{{ route('login') }}" class="feature-scroll-item">
+                        <div class="icon">
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+                        <h4>Meeting Scheduling</h4>
+                        <p>Schedule meetings and video calls. Invite participants and share details.</p>
+                    </a>
+                    <a href="{{ route('login') }}" class="feature-scroll-item">
+                        <div class="icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <h4>Approvals</h4>
+                        <p>Submit and review approval requests. Streamline decision-making process.</p>
+                    </a>
                 </div>
             </div>
         </div>
