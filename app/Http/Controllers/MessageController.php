@@ -70,6 +70,8 @@ class MessageController extends Controller
             'title' => 'New Message',
             'message' => Auth::user()->name . ' sent you a message',
             'type' => 'message',
+            'related_id' => $message->id,
+            'route' => route('messages.show', $request->receiver_id),
             'is_read' => false
         ]);
 

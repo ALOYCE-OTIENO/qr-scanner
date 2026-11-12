@@ -61,6 +61,8 @@ class LeaveController extends Controller
                 'title' => 'New Leave Request',
                 'message' => Auth::user()->name . " has applied for " . ucfirst($request->leave_type) . " leave",
                 'type' => 'system',
+                'related_id' => $leave->id,
+                'route' => route('leaves.show', $leave->id),
                 'is_read' => false
             ]);
         }
@@ -88,6 +90,8 @@ class LeaveController extends Controller
             'title' => 'Leave Approved',
             'message' => "Your " . ucfirst($leave->leave_type) . " leave request has been approved",
             'type' => 'system',
+            'related_id' => $leave->id,
+            'route' => route('leaves.show', $leave->id),
             'is_read' => false
         ]);
 
@@ -112,6 +116,8 @@ class LeaveController extends Controller
             'title' => 'Leave Rejected',
             'message' => "Your " . ucfirst($leave->leave_type) . " leave request has been rejected: " . $request->admin_comment,
             'type' => 'system',
+            'related_id' => $leave->id,
+            'route' => route('leaves.show', $leave->id),
             'is_read' => false
         ]);
 

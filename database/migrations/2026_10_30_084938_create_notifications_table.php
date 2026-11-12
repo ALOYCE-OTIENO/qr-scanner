@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('message');
             $table->enum('type', ['attendance', 'job_output', 'announcement', 'message', 'system'])->default('system');
             $table->foreignId('related_id')->nullable();
+            $table->string('route')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();
         });

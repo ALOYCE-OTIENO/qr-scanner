@@ -17,7 +17,11 @@
         @if($notifications->count() > 0)
             <div class="list-group">
                 @foreach($notifications as $notification)
+                    @if($notification->route)
+                    <a href="{{ $notification->route }}" class="list-group-item list-group-item-action {{ $notification->is_read ? '' : 'bg-light' }}">
+                    @else
                     <div class="list-group-item {{ $notification->is_read ? '' : 'bg-light' }}">
+                    @endif
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
                                 <h6 class="mb-1" style="font-weight: 600;">{{ $notification->title }}</h6>
@@ -31,7 +35,11 @@
                                 </form>
                             @endif
                         </div>
+                    @if($notification->route)
+                    </a>
+                    @else
                     </div>
+                    @endif
                 @endforeach
             </div>
             {{ $notifications->links() }}
