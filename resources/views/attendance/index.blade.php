@@ -5,39 +5,82 @@
 @push('styles')
 <style>
     #map {
-        height: 300px;
+        height: 400px;
         width: 100%;
-        border-radius: 8px;
-        margin-bottom: 1rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        border: 2px solid var(--wecom-border);
     }
     .location-info {
         background: var(--wecom-gray-light);
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1rem;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--wecom-border);
     }
     .location-info p {
-        margin: 0.5rem 0;
+        margin: 0.75rem 0;
+        font-size: 0.95rem;
     }
     .distance-badge {
         display: inline-block;
-        padding: 0.5rem 1rem;
+        padding: 0.75rem 1.5rem;
         border-radius: 50px;
         font-weight: 600;
+        font-size: 1rem;
     }
     .distance-valid {
-        background: #d4edda;
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
         color: #155724;
+        border: 2px solid #28a745;
     }
     .distance-invalid {
-        background: #f8d7da;
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
         color: #721c24;
+        border: 2px solid #dc3545;
+    }
+    .map-container {
+        position: relative;
+    }
+    .map-legend {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        border: 1px solid var(--wecom-border);
+    }
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .legend-marker {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
     }
 </style>
 @endpush
 
 @push('scripts')
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY', '') }}&callback=initMap" async defer></script>
+<script>
+    // Google Maps API - Use a placeholder key if not configured
+    window.googleMapsApiKey = '{{ env('GOOGLE_MAPS_API_KEY', '') }}';
+
+    if (window.googleMapsApiKey) {
+        document.write('<script src="https://maps.googleapis.com/maps/api/js?key=' + window.googleMapsApiKey + '&callback=initMap" async defer><\/script>');
+    } else {
+        console.warn('Google Maps API key not configured. Map will not load.');
+        // Fallback - show error in map div
+        document.addEventListener('DOMContentLoaded', function() {
+            const mapDiv = document.getElementById('map');
+            if (mapDiv) {
+                mapDiv.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f9fa; border-radius: 12px; padding: 2rem; text-align: center;"><div><i class="bi bi-exclamation-triangle" style="font-size: 3rem; color: #dc3545;"></i><p style="margin-top: 1rem; color: #666;">Google Maps API key not configured.<br>Please add GOOGLE_MAPS_API_KEY to your .env file.</p></div></div>';
+            }
+        });
+    }
+</script>
 @endpush
 
 @section('content')
@@ -108,6 +151,21 @@
             </h5>
         </div>
         <div class="card-body">
+            <!-- Map Container -->
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <div class="legend-marker" style="background: #07C160;"></div>
+                        <span>Your Location</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-marker" style="background: #dc3545;"></div>
+                        <span>Factory Location</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Location Information -->
             <div id="locationInfo">
                 <div class="alert alert-info">
@@ -208,6 +266,10 @@
 
 <script>
 let userLocation = null;
+let map = null;
+let userMarker = null;
+let factoryMarker = null;
+let distanceCircle = null;
 const factoryLat = {{ env('FACTORY_LATITUDE', -1.286389) }};
 const factoryLng = {{ env('FACTORY_LONGITUDE', 36.817223) }};
 const maxDistance = {{ env('MAX_CHECKIN_DISTANCE', 10) }};
@@ -226,6 +288,9 @@ function getUserLocation() {
 
                 const distance = calculateDistance(userLocation.lat, userLocation.lng, factoryLat, factoryLng);
                 updateLocationDisplay(distance, userLocation.lat, userLocation.lng);
+
+                // Update map with user location
+                updateUserLocationOnMap(userLocation.lat, userLocation.lng);
             },
             function(error) {
                 console.error('Error getting location:', error);
@@ -292,8 +357,112 @@ function showLocationError(message) {
     }
 }
 
+// Initialize Google Map
+function initMap() {
+    const mapOptions = {
+        center: { lat: factoryLat, lng: factoryLng },
+        zoom: 16,
+        mapTypeId: 'roadmap',
+        styles: [
+            {
+                featureType: 'poi',
+                elementType: 'labels',
+                stylers: [{ visibility: 'off' }]
+            }
+        ]
+    };
+
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // Add factory marker
+    factoryMarker = new google.maps.Marker({
+        position: { lat: factoryLat, lng: factoryLng },
+        map: map,
+        title: 'Factory Location',
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 12,
+            fillColor: '#dc3545',
+            fillOpacity: 1,
+            strokeColor: '#ffffff',
+            strokeWeight: 3
+        }
+    });
+
+    // Add distance circle (10 meters radius)
+    distanceCircle = new google.maps.Circle({
+        map: map,
+        center: { lat: factoryLat, lng: factoryLng },
+        radius: maxDistance,
+        fillColor: '#07C160',
+        fillOpacity: 0.2,
+        strokeColor: '#07C160',
+        strokeOpacity: 0.8,
+        strokeWeight: 2
+    });
+
+    // Factory info window
+    const factoryInfoWindow = new google.maps.InfoWindow({
+        content: '<div style="padding: 10px;"><strong>Factory Location</strong><br>Check-in radius: ' + maxDistance + ' meters</div>'
+    });
+
+    factoryMarker.addListener('click', function() {
+        factoryInfoWindow.open(map, factoryMarker);
+    });
+}
+
+// Update map with user location
+function updateUserLocationOnMap(lat, lng) {
+    if (!map) return;
+
+    // Remove existing user marker if any
+    if (userMarker) {
+        userMarker.setMap(null);
+    }
+
+    // Add user marker
+    userMarker = new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        map: map,
+        title: 'Your Location',
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: '#07C160',
+            fillOpacity: 1,
+            strokeColor: '#ffffff',
+            strokeWeight: 3
+        },
+        animation: google.maps.Animation.DROP
+    });
+
+    // Center map on user location
+    map.setCenter({ lat: lat, lng: lng });
+
+    // Draw line between user and factory
+    const lineCoordinates = [
+        { lat: lat, lng: lng },
+        { lat: factoryLat, lng: factoryLng }
+    ];
+
+    const line = new google.maps.Polyline({
+        path: lineCoordinates,
+        geodesic: true,
+        strokeColor: '#666',
+        strokeOpacity: 0.6,
+        strokeWeight: 2
+    });
+
+    line.setMap(map);
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize map if Google Maps API is loaded
+    if (typeof google !== 'undefined' && google.maps) {
+        initMap();
+    }
+
     // Get location when page loads
     getUserLocation();
 
