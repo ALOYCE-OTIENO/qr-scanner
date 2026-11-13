@@ -50,6 +50,10 @@
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
+@if(session('warning'))
+    <div class="alert alert-warning">{{ session('warning') }}</div>
+@endif
+
 @if(session('error'))
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
@@ -305,9 +309,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (userLocation) {
                 const distance = calculateDistance(userLocation.lat, userLocation.lng, factoryLat, factoryLng);
                 if (distance > maxDistance) {
-                    e.preventDefault();
-                    alert(`You are ${distance.toFixed(2)} meters away from the factory. Check-in is only allowed within ${maxDistance} meters.`);
-                    return false;
+                    // Warn but allow submission
+                    if (!confirm(`You are ${distance.toFixed(2)} meters away from the factory. Your location and time will be saved. Continue?`)) {
+                        e.preventDefault();
+                        return false;
+                    }
                 }
                 // Add location fields to form
                 const latInput = document.createElement('input');
@@ -320,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 lngInput.type = 'hidden';
                 lngInput.name = 'longitude';
                 lngInput.value = userLocation.lng;
-                checkInForm.appendChild(lngInput);
+                checkOutForm.appendChild(lngInput);
             }
         });
     }
@@ -330,9 +336,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (userLocation) {
                 const distance = calculateDistance(userLocation.lat, userLocation.lng, factoryLat, factoryLng);
                 if (distance > maxDistance) {
-                    e.preventDefault();
-                    alert(`You are ${distance.toFixed(2)} meters away from the factory. Check-out is only allowed within ${maxDistance} meters.`);
-                    return false;
+                    // Warn but allow submission
+                    if (!confirm(`You are ${distance.toFixed(2)} meters away from the factory. Your location and time will be saved. Continue?`)) {
+                        e.preventDefault();
+                        return false;
+                    }
                 }
                 // Add location fields to form
                 const latInput = document.createElement('input');

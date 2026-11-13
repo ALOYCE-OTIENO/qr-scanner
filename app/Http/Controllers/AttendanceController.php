@@ -88,7 +88,8 @@ class AttendanceController extends Controller
             $distance = $this->calculateDistance($latitude, $longitude, $factoryLat, $factoryLng);
 
             if ($distance > $maxDistance) {
-                return back()->with('error', "You are {$distance} meters away from the factory. Check-in is only allowed within {$maxDistance} meters.");
+                // Still save the attendance but with a warning
+                return back()->with('warning', "Note: You are {$distance} meters away from the factory. Your location and time have been saved, but check-in is normally only allowed within {$maxDistance} meters.");
             }
         }
 
@@ -160,7 +161,8 @@ class AttendanceController extends Controller
             $distance = $this->calculateDistance($latitude, $longitude, $factoryLat, $factoryLng);
 
             if ($distance > $maxDistance) {
-                return back()->with('error', "You are {$distance} meters away from the factory. Check-out is only allowed within {$maxDistance} meters.");
+                // Still save the check-out but with a warning
+                return back()->with('warning', "Note: You are {$distance} meters away from the factory. Your location and time have been saved, but check-out is normally only allowed within {$maxDistance} meters.");
             }
         }
 
