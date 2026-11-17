@@ -34,10 +34,23 @@ class AuthController extends Controller
             'is_admin' => false,
         ]);
 
+        // Create employee record for the new user
+        $employeeCount = \App\Models\Employee::count();
+        $employeeId = 'EMP' . str_pad($employeeCount + 1, 3, '0', STR_PAD_LEFT);
+
+        \App\Models\Employee::create([
+            'full_name' => $request->name,
+            'email' => $request->email,
+            'employee_id' => $employeeId,
+            'department' => 'General',
+            'position' => 'Employee',
+            'join_date' => now(),
+        ]);
+
         Auth::login($user);
 
         return redirect()->route('dashboard')
-            ->with('success', 'Registration successful! Welcome to QR SCANNER.');
+            ->with('success', 'Registration successful! Welcome to QR SCANNER. Your employee ID is ' . $employeeId);
     }
 
     public function login(Request $request)
